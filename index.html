@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Main Form</title>
+</head>
+<body>
+
+<h1>Copy and Paste Both Playlists</h1>
+<script src="src/spotify-web-api.js" async></script>
+<script src="Core%20Logic.js" async></script>
+
+<!--
+<form>
+    2015:
+
+    <textarea name="listA" rows="101" cols="55">
+</textarea>
+
+    2016:
+    <textarea name="listB" rows="101" cols="55">
+</textarea>
+    <button>Compare</button>
+</form>
+-->
+
+<div id="2015">
+    https://open.spotify.com/track/31DVVa40JpTudyGDNC1ROW
+    https://open.spotify.com/track/6P5UXKba6ougqoPmflqwKX
+    https://open.spotify.com/track/6MheD6qKezwyZVtuHSeGbJ
+    https://open.spotify.com/track/4g95pwP4GeV9DLO5nB0QAo
+    https://open.spotify.com/track/6qH6xP8tzxvZlCcmHit4AL
+    https://open.spotify.com/track/6SVEfC03iZiQRulq5Br9mA
+    https://open.spotify.com/track/2Yz2Z1ENB85nYrK3Rg2qxO
+    https://open.spotify.com/track/19bb9E728mmpEunAItE1K6
+    https://open.spotify.com/track/08Tfz1j7FtRAIdmZbkjP4t
+    https://open.spotify.com/track/2u3HmBPHrk3ooSdVikignW
+    https://open.spotify.com/track/4g3Ax56IslQkI6XVfYKVc5
+    https://open.spotify.com/track/0lo98Gacg04cnpdrPHcBcF
+    https://open.spotify.com/track/6FGGbVnc11F8K7fJBISQm8
+    https://open.spotify.com/track/7kmna8LKfhNW7lD99K5NJb
+    https://open.spotify.com/track/1SFXDOmnBWypdnYdvpQfRZ
+    https://open.spotify.com/track/7I47HANN2FITxyANkTtPLd
+    https://open.spotify.com/track/1SSsVgx1qZfOILSiI89PUs
+    https://open.spotify.com/track/2NXnBIYFPQPo7GSn3TEbpD
+    https://open.spotify.com/track/6W7pV0pC9wKSsbLBgP33qf
+    https://open.spotify.com/track/06rPFgQsKS607RhYIqCmGq
+    https://open.spotify.com/track/4lPJoKw24HizeIcDLqaWeE
+    https://open.spotify.com/track/1HvIpJOJU4g0GSfnuTTCHT
+    https://open.spotify.com/track/510i2lQvSKIgFXVrq2Dg5Y
+    https://open.spotify.com/track/41X9To0bQ4fpoSRri4NHiI
+    https://open.spotify.com/track/1qFfsUxth2V4yXg8YcRblp
+    https://open.spotify.com/track/3q471rLZsuiA08jxR9Bt7L
+    https://open.spotify.com/track/45D0ixQWzXQOoU1S9aSnKk
+    https://open.spotify.com/track/6ILhYeLYqVpIKHNnSwnzhe
+    https://open.spotify.com/track/2yqG9SRCbQf1c6d5hwmfKJ
+    https://open.spotify.com/track/0xFgY9DtSCPgwOihjD64c1
+    https://open.spotify.com/track/5dtTD2LIqWk1GsB8y0zDur
+    https://open.spotify.com/track/5xkTHtZiRaazoh87lpeNwY
+    https://open.spotify.com/track/3bGVC25HcISA1ApJwux1LF
+    https://open.spotify.com/track/5DeV5m5gzNq0KvlaZs3Eb6
+    https://open.spotify.com/track/00gvX9sFwh19OH88f4v4jW
+    https://open.spotify.com/track/5lcTh4kYshToQMHnlNsxaj
+    https://open.spotify.com/track/7KC3ejOayXMaklgbcu0vo4
+    https://open.spotify.com/track/3vsmNyffw3mKCjDSXcKIQ6
+    https://open.spotify.com/track/21OjaM3ruMNK1Qqhy2sa70
+    https://open.spotify.com/track/0PHSbSNolQJPl0NWpiDb3U
+    https://open.spotify.com/track/38LpbjQx5XAA95pb7AGRnE
+    https://open.spotify.com/track/7j3nbSiaWphYU2cFgyQXd9
+    https://open.spotify.com/track/068LmtzI6xJJDPfPnMje0U
+    https://open.spotify.com/track/55jxzrIhEupVy1l6RDJaO5
+    https://open.spotify.com/track/4AojSWhrpehwehnGLwprAN
+    https://open.spotify.com/track/2PIcAQiSOayFwJrfWc72Qc
+    https://open.spotify.com/track/37v05EYvZ5Sk4Se07c4Ii4
+    https://open.spotify.com/track/2I57HGKOFNaIPRTDg9ZzRm
+    https://open.spotify.com/track/1divptdjcWXvF1aflfTQnw
+    https://open.spotify.com/track/7pfo4j1AsU4Cm15UmXMkTB
+    https://open.spotify.com/track/7x7F7xBqXqr0L9wqJ3tuQW
+    https://open.spotify.com/track/3Vj9SYcisXn7qmLrDe75k1
+    https://open.spotify.com/track/5t6sjc3hlIiTnnhzcVqBOT
+    https://open.spotify.com/track/1gGY6qfslDtJ4OoWQGKtkE
+    https://open.spotify.com/track/32CFVYfYT4wE1MTNWj66Rt
+    https://open.spotify.com/track/42MTKulweDDtcNIRFO2a72
+    https://open.spotify.com/track/6VuuRQz7JX22KsW04SYYX5
+    https://open.spotify.com/track/7oO5KWL8Nc3Q9GsegD3Jk7
+    https://open.spotify.com/track/6AYrHFx4DQxdUQeSmAzNYr
+    https://open.spotify.com/track/5WGayNvXFie3ARLxuWGGgY
+    https://open.spotify.com/track/430T9wNlVFTBqUQNJp013P
+    https://open.spotify.com/track/5TzN4px6Hz1AcLwTkkmjcG
+    https://open.spotify.com/track/1d5hX0RYHcDM4aHJHSm5cr
+    https://open.spotify.com/track/43BJOG4sw6rHmwTDfRTImN
+    https://open.spotify.com/track/4JNlOKg1uTY6O4RzvSStaa
+    https://open.spotify.com/track/29jjGaZyRHIFz0dIFGNZhU
+    https://open.spotify.com/track/3bFX4VZdrc493SyNSZNq1s
+    https://open.spotify.com/track/182xvGZJJQDgYJ6CH2NIOa
+    https://open.spotify.com/track/7iE9oBkH73M1K74gyjjx7c
+    https://open.spotify.com/track/22qStJiB72XJLEk1yjy6SC
+    https://open.spotify.com/track/7iynmhwFRyjESH5cnTSLTO
+    https://open.spotify.com/track/7GBwTrOpTtsLdJN3Dc0U1C
+    https://open.spotify.com/track/6TFKclwGeJRTeZdY97XqPG
+    https://open.spotify.com/track/06vkfGk32JjIIisw3du6Lv
+    https://open.spotify.com/track/4rII58jraqoGYro5yjXQlM
+    https://open.spotify.com/track/3a6PN6BRB8PP3ms48s7kU1
+    https://open.spotify.com/track/3cg38isdTrBH63B4BMywsw
+    https://open.spotify.com/track/0iPaA79noJrsOFw94EfL18
+    https://open.spotify.com/track/0nmuOp9ditdq30RtN8Jc7V
+    https://open.spotify.com/track/4ri9OOxRBnf4sfJHQ1dKPh
+    https://open.spotify.com/track/3s2f6XU5sJ6aqEe7GgDBta
+    https://open.spotify.com/track/3SCE48fTsE0YE2XzUYGZNW
+    https://open.spotify.com/track/5M8toR5iIWZNdolgivxGyv
+    https://open.spotify.com/track/37A0JOrJ5WnmhIyGNnAhRN
+    https://open.spotify.com/track/5T2rl7xklxiAEPz04S17um
+    https://open.spotify.com/track/1U8ZGtWBxcPeWcwDTCO64X
+    https://open.spotify.com/track/2x7cxHkkKF4afADOkrxe6J
+    https://open.spotify.com/track/5fkUAVRcfAIUrZBPPNohXb
+    https://open.spotify.com/track/6mfUwnHd7OTYPEWmOsvJsn
+    https://open.spotify.com/track/4ZXaX1vqa9fmGFJr2vf1qW
+    https://open.spotify.com/track/1fFz0LBRQT6lvpHbDaKOsB
+    https://open.spotify.com/track/51xOnCPoOtLNm4Aih92LTo
+    https://open.spotify.com/track/5noQJkpVfHt2D4df2GXieV
+    https://open.spotify.com/track/14c8K5XYf658KA82UzRLPQ
+    https://open.spotify.com/track/5XvcTjtwvJSUl2iKiQm3FF
+    https://open.spotify.com/track/3kb38wezoUA8ki5jPYy3t5
+    https://open.spotify.com/track/5QOnaZuCrqMXIGGAHvazq2
+    https://open.spotify.com/track/1n6jxW6aFb46rhAgkcX3n3
+    https://open.spotify.com/track/2THkQauDWMvJgXFGPY4iKB
+</div>
+
+
+<div id="2016">
+    https://open.spotify.com/track/1R2CpJXwERlLURyKaE1nWr
+    https://open.spotify.com/track/305a2Skero7JOIEEm8NTG5
+    https://open.spotify.com/track/07fB2SZNaI4otc0eqMhJWN
+    https://open.spotify.com/track/4My8vV76KJYVC3apdvFazJ
+    https://open.spotify.com/track/38vNwoJygRx1u77aJOV8Zb
+    https://open.spotify.com/track/4g95pwP4GeV9DLO5nB0QAo
+    https://open.spotify.com/track/6uoM7KHsyJsHZqBQHKjQbc
+    https://open.spotify.com/track/12c045rZPDMSDJHmO1UnFn
+    https://open.spotify.com/track/758wEKVqfYopJIHYWdLVd4
+    https://open.spotify.com/track/7iynmhwFRyjESH5cnTSLTO
+    https://open.spotify.com/track/0F8z77c6u5BXdbZkA9HxaG
+    https://open.spotify.com/track/6PVuMhSlLOt7QHhIkNyvii
+    https://open.spotify.com/track/2YxM5vNyhtf7J9PJO1chJ2
+    https://open.spotify.com/track/1XdUgiFWnD7si7HAS4KPfn
+    https://open.spotify.com/track/74CXQDbpYhp5mu8La3VreE
+    https://open.spotify.com/track/068LmtzI6xJJDPfPnMje0U
+    https://open.spotify.com/track/5O7i6qd2VwEVwJc6WUEJ6F
+    https://open.spotify.com/track/2wCzZLZbaNMcYyeatBNHof
+    https://open.spotify.com/track/0uy4LNxyL0QmtDveDaiGwo
+    https://open.spotify.com/track/1oIDPZXWNLdWMVHcuG2Xpp
+    https://open.spotify.com/track/3rRDYRLMWguwxotkC9AtTX
+    https://open.spotify.com/track/4Ag8zrkfmeWmMcCbKrwxWZ
+    https://open.spotify.com/track/2hlT89txX7ehfXmDwPPsDj
+    https://open.spotify.com/track/6jbgySyREi0vZIldoca1n5
+    https://open.spotify.com/track/7IEUE6XnwTosZRlEnWWRV6
+    https://open.spotify.com/track/22WbRxKcSTcKhG7Urxi7rP
+    https://open.spotify.com/track/6WvESq4vEfCqsVCiWl5o8t
+    https://open.spotify.com/track/3I3lbhzoOvhSzSFqGdDtao
+    https://open.spotify.com/track/3JeT6Xcv6MlEHHylk8SKQ1
+    https://open.spotify.com/track/268V0Smf1rkcfKH40eVlHt
+    https://open.spotify.com/track/6LTBJ98gnz7cdx2x4yZzYZ
+    https://open.spotify.com/track/0Je3mUpyJNTlce1LiByDAh
+    https://open.spotify.com/track/335S2sah7gVuaui8pkw3Yb
+    https://open.spotify.com/track/0Hyr2jPRwOQF8pf13n8eB1
+    https://open.spotify.com/track/6qH6xP8tzxvZlCcmHit4AL
+    https://open.spotify.com/track/0pAiyIHt9DyHOjWgF41kp6
+    https://open.spotify.com/track/2tjqgiScVM3VoZBYGPC2Dm
+    https://open.spotify.com/track/3tRyOuZDT6GsGyCitTfeil
+    https://open.spotify.com/track/5PsUB0ISfQxRLhF5DmI5Ks
+    https://open.spotify.com/track/0DtWgJmK3sHIBK2o8gIHtb
+    https://open.spotify.com/track/1arh29Ntn5kd0GeO9bqig0
+    https://open.spotify.com/track/6vcd0sKmiioXQKbcZPr7gq
+    https://open.spotify.com/track/5QyYLYNVAue9aS3wWxcroS
+    https://open.spotify.com/track/6dsq7Nt5mIFzvm5kIYNORy
+    https://open.spotify.com/track/7rF2bHXc5wa3hM3114pppm
+    https://open.spotify.com/track/1yg0PP8yXwA0AFU48Hq6MY
+    https://open.spotify.com/track/5BWBKCfklyNcgFeviBnMvO
+    https://open.spotify.com/track/7CJJogay3hwZ0qji0p0Lkf
+    https://open.spotify.com/track/4eRufIYY6vwEN7QAyzkFOM
+    https://open.spotify.com/track/2Yz2Z1ENB85nYrK3Rg2qxO
+    https://open.spotify.com/track/5oiI5GJzkc0h7I1783tRuz
+    https://open.spotify.com/track/0aOT5OQeNPyZzGwwudbaYs
+    https://open.spotify.com/track/6vPDjg4zuLlJrzgm9vqZCj
+    https://open.spotify.com/track/4sy45X8Jo15DxjDDpDkInF
+    https://open.spotify.com/track/1GYVFolrzA1ZWirojv1FNM
+    https://open.spotify.com/track/1OWU56gDjT9hDybpIMeGXH
+    https://open.spotify.com/track/13LqCh4tcyxDJbALYVCN8b
+    https://open.spotify.com/track/43c8S517EuWXUBVueUH5jA
+    https://open.spotify.com/track/7GLL5dU80NstXjcKlDMJmr
+    https://open.spotify.com/track/3YupOCAB55o78W4mcDjqIQ
+    https://open.spotify.com/track/3ctALmweZBapfBdFiIVpji
+    https://open.spotify.com/track/4zjQb1e5S9wiz9DETJlp4B
+    https://open.spotify.com/track/0bZelokqNQicLQfLU1Ayw8
+    https://open.spotify.com/track/4pq3RmbhTMNmH5HcVchdPk
+    https://open.spotify.com/track/4gXxlyTDUrJRckXn1MtS5Q
+    https://open.spotify.com/track/4XiRjUElwREYMDh74caLKu
+    https://open.spotify.com/track/5fkUAVRcfAIUrZBPPNohXb
+    https://open.spotify.com/track/4jF5FDfT8v4Ppn11TnGlok
+    https://open.spotify.com/track/6Wka2yr1nQMAbRQzaJtjMv
+    https://open.spotify.com/track/08Tfz1j7FtRAIdmZbkjP4t
+    https://open.spotify.com/track/567nF24RUTNFq2MtCKbJBC
+    https://open.spotify.com/track/1vUnbJD0mPtCMy17lr1iq8
+    https://open.spotify.com/track/0fDFzVTG8c2fW9EM5f1RHM
+    https://open.spotify.com/track/7Cg3F9ZsZ2TYUnlza49NYh
+    https://open.spotify.com/track/2JH6m5odvWzRNH1a1pzkVH
+    https://open.spotify.com/track/4rII58jraqoGYro5yjXQlM
+    https://open.spotify.com/track/0lxaOp98SkwlxrTNHNG3tu
+    https://open.spotify.com/track/6BwuBSggvQWmpvSLtDIe3b
+    https://open.spotify.com/track/2xRTlnCsKHtnCahchPso2L
+    https://open.spotify.com/track/1wiwucQCEeXKVKeL63vVj1
+    https://open.spotify.com/track/4DicdCZ3vgY8fOzCiuQ657
+    https://open.spotify.com/track/71pYeCIObLXJO1h3tu9I3w
+    https://open.spotify.com/track/5AiNZnMDCWwujIENPj9PV9
+    https://open.spotify.com/track/1a2KQq8DqD7jahrPxXJ2FB
+    https://open.spotify.com/track/32CFVYfYT4wE1MTNWj66Rt
+    https://open.spotify.com/track/41X9To0bQ4fpoSRri4NHiI
+    https://open.spotify.com/track/6CdkgSCHZONqHy1KgmobNY
+    https://open.spotify.com/track/6MheD6qKezwyZVtuHSeGbJ
+    https://open.spotify.com/track/7m6akFeCaTvE8MAtInyrl0
+    https://open.spotify.com/track/75JGCMxBeKN4O4mC6Gx4Ie
+    https://open.spotify.com/track/7fUr8EpRc0AC4MCPMVPIgI
+    https://open.spotify.com/track/114hBlz8pLWfGrpVtD1XZw
+    https://open.spotify.com/track/3clIHVzJ9J2rvvrFUKLICo
+    https://open.spotify.com/track/3SCE48fTsE0YE2XzUYGZNW
+    https://open.spotify.com/track/2NvAdwDIQ71uXIWZkr6tIO
+    https://open.spotify.com/track/430T9wNlVFTBqUQNJp013P
+    https://open.spotify.com/track/0PHSbSNolQJPl0NWpiDb3U
+    https://open.spotify.com/track/6oeuEHxwfbqu5xIJrcbPzN
+    https://open.spotify.com/track/4x7XJOE2ml2P3o3i77466j
+    https://open.spotify.com/track/1PXuG5BGuZBKvcAEC9MQca
+    https://open.spotify.com/track/7swGurTfZlwx7mTOE8PpIc
+</div>
+
+
+
+</body>
+</html>
+
