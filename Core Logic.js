@@ -49,15 +49,33 @@
 
     // The request gets too big after about 40 Ids
     var chunkedArray = createGroupedArray(trackIds, 40);
+    var trackList = [];
+    var tracks = [];
 
     for (i = 0; i < chunkedArray.length; i++) {
+        /*// TOdo, how to get this back in order
         spotifyApi.getTracks(chunkedArray[i], function(err, data) {
             if (err) console.error(err);
             else console.log('Tracks', data);
-        });
+        });*/
 
+        trackList[i] = spotifyApi.getTracks(chunkedArray[i]);
     }
 
+    // ???
+    for (i = 0; i < trackList.length; i++) {
+        trackList[i].then(function(data) {
+            //console.log('Artist albums', data);
+            tracks = data;
+        }, function(err) {
+            console.error(err);
+        })
+    }
+
+
+
+    console.log('TrackList', trackList);
+    console.log('tracks', tracks);
 
 
 })();
