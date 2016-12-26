@@ -1,12 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>Main Form</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js" integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK" crossorigin="anonymous"></script>
 </head>
+
+<style>
+    body {
+        background-color: rgb(40,40,40);
+    }
+
+    section {
+        color: #fff;
+    }
+</style>
+
 <body>
 
-<h1>Copy and Paste Both Playlists</h1>
+
+
+
+<div class="jumbotron">
+    <div class="container">
+        <h1 class="display-3">Compare Spotify Top 100 Playlists</h1>
+        <p></p>
+    </div>
+</div>
+
+<section>
+    <div class="container">
+        <h2>How to use:</h2>
+        <ol>
+            <li>In Spotify, find your top 100 playlist from last year</li>
+            <li>Select the first track then <kbd><kbd>ctrl</kbd> + <kbd>a</kbd></kbd>, <kbd><kbd>ctrl</kbd> + <kbd>c</kbd></kbd> to copy all the ordered Spotify track ids to your clipboard</li>
+            <li>Then find your current top 100 playlist and copy it into the second field</li>
+            <li>Hit compare</li>
+        </ol>
+    </div>
+</section>
+
+<section>
+    <div class="container">
+        <form>
+            <button type="submit" class="btn btn-primary">Compare</button>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="list2">Last Year's Tracks</label>
+                        <textarea class="form-control form-control-sm" rows="101" id="list2" name="list2" placeholder="Last Year's Tracks"></textarea>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="list1">Current Year's Tracks</label>
+                        <textarea class="form-control form-control-sm" rows="101" id="list1" name="list1" placeholder="Current Year's Tracks"></textarea>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
 
 <!--
 <form>
