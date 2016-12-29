@@ -9,3 +9,6 @@ WIP
 - Build form
 - General UI
 - Validate input
+## Possible enhancements
+- Investigate genres
+- Track images

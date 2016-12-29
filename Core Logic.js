@@ -1,7 +1,23 @@
 (function () {
 
+    /*****************************************************************************
+     *
+     * Event listeners for UI elements
+     *
+     ****************************************************************************/
+
+    document.getElementById("debug").addEventListener("click", function(event){
+        event.preventDefault();
+    });
+
+    document.getElementById("mainSubmit").addEventListener("click", function(event){
+        event.preventDefault();
+    });
+
+
+
     /**
-     * Array chunk that
+     * Array chunk dat shit
      * src: http://www.frontcoded.com/splitting-javascript-array-into-chunks.html
      * @param arr
      * @param chunkSize
@@ -47,8 +63,8 @@
     }
 
 
-    // The request gets too big after about 40 Ids
-    var chunkedArray = createGroupedArray(trackIds, 40);
+    // The api can handle a max of 50, split the requests evenlyish
+    var chunkedArray = createGroupedArray(trackIds, 36);
     var trackList = [];
     var tracks = [];
 

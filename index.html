@@ -13,58 +13,220 @@
 <style>
     body {
         background-color: rgb(40,40,40);
+
+    }
+
+    .jumbotron {
+        text-align: center;
+
     }
 
     section {
         color: #fff;
+    }
+
+    .intro {
+        /*background-color: black;*/
+    }
+
+    .screenshot {
+        max-width: 400px;
+    }
+
+    footer {
+        color: #fff;
+        background-color: rgb(24,24,24);
+
+    }
+
+    button {
+        background-color: rgb(47,213,102);
     }
 </style>
 
 <body>
 
 
+<nav class="navbar navbar-dark bg-inverse">
+    <div class="container">
+        <a class="navbar-brand" href="#">>_ thefinchmeister</a>
+        <ul class="nav navbar-nav">
+            <!--TODO?-->
+        </ul>
+    </div>
 
+</nav>
 
-<div class="jumbotron">
+<div class="jumbotron jumbotron-fluid">
     <div class="container">
         <h1 class="display-3">Compare Spotify Top 100 Playlists</h1>
         <p></p>
     </div>
 </div>
-
-<section>
+<section class="intro">
     <div class="container">
-        <h2>How to use:</h2>
-        <ol>
-            <li>In Spotify, find your top 100 playlist from last year</li>
-            <li>Select the first track then <kbd><kbd>ctrl</kbd> + <kbd>a</kbd></kbd>, <kbd><kbd>ctrl</kbd> + <kbd>c</kbd></kbd> to copy all the ordered Spotify track ids to your clipboard</li>
-            <li>Then find your current top 100 playlist and copy it into the second field</li>
-            <li>Hit compare</li>
-        </ol>
+        <p class="lead">Discover how your music taste has evolved in the last year.</p>
+        You need to be on desktop version
+        You must have 2 years of top 100 spotify playlists to compare
     </div>
+
 </section>
 
-<section>
+
+<section id="howto">
     <div class="container">
-        <form>
-            <button type="submit" class="btn btn-primary">Compare</button>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="list2">Last Year's Tracks</label>
-                        <textarea class="form-control form-control-sm" rows="101" id="list2" name="list2" placeholder="Last Year's Tracks"></textarea>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="list1">Current Year's Tracks</label>
-                        <textarea class="form-control form-control-sm" rows="101" id="list1" name="list1" placeholder="Current Year's Tracks"></textarea>
-                    </div>
-                </div>
+        <h2>Step 1:</h2>
+        <p>In Spotify, search for your top 100 playlist from last year.</p>
+        <div class="row">
+            <div class="col-lg-4 col-sm-6 col-xs-8">
+
+                <figure class="figure">
+                    <img src="images/find2015-1.png" class="figure-img img-fluid rounded">
+                    <figcaption class="figure-caption">Spotify didn't automatically save your 2015 top tracks so the playlist is likely to be named differently</figcaption>
+                </figure>
             </div>
+
+        </div>
+
+        <h2>Step 2:</h2>
+        <p>Select the first track of the playlist then <kbd><kbd>ctrl</kbd> + <kbd>a</kbd></kbd>, <kbd><kbd>ctrl</kbd> + <kbd>c</kbd></kbd> to copy all the ordered Spotify track Ids to your clipboard.
+            </p>
+        <div class="row">
+            <div class="col-lg-4 col-sm-6 col-xs-8">
+                <img src="images/find2015-2.png" alt="step 1" class="img-fluid rounded">
+            </div>
+            <div class="col-lg-4 col-sm-6 col-xs-8">
+                <img src="images/find2015-3.png" alt="step 1" class="img-fluid rounded">
+            </div>
+        </div>
+
+        <p>Paste them into the box below:</p>
+        <form id="compareTop100">
+
+
+            <div class="form-group">
+                <textarea class="form-control form-control-sm" rows="5" id="list2" name="list2" placeholder="https://open.spotify.com/track/31DVVa40JpTudyGDNC1ROW
+https://open.spotify.com/track/6P5UXKba6ougqoPmflqwKX
+https://open.spotify.com/track/6MheD6qKezwyZVtuHSeGbJ
+...
+https://open.spotify.com/track/4g95pwP4GeV9DLO5nB0QAo"></textarea>
+            </div>
+
+
+            <h2>Step 3:</h2>
+            <p>Find your current top 100 playlist.</p>
+
+            <div class="row">
+                <div class="col-lg-4 col-sm-6 col-xs-8">
+
+                    <figure class="figure">
+                        <img src="images/find2016-1.png" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption">This will have been saved for you as 'Your Top Songs 2016'</figcaption>
+                    </figure>
+                </div>
+
+            </div>
+            <p>Then copy all the tracks to the clipboard again and paste them into the box below:</p>
+
+            <div class="form-group">
+                <textarea class="form-control form-control-sm" rows="5" id="list1" name="list1" placeholder="https://open.spotify.com/track/31DVVa40JpTudyGDNC1ROW
+https://open.spotify.com/track/6P5UXKba6ougqoPmflqwKX
+https://open.spotify.com/track/6MheD6qKezwyZVtuHSeGbJ
+...
+https://open.spotify.com/track/4g95pwP4GeV9DLO5nB0QAo"></textarea>
+            </div>
+
+
+            <h2>Step 3:</h2>
+            <p>Hit compare</p>
+            <button type="submit" id="mainSubmit" class="btn btn-primary">Compare</button>
+            <button type="submit" id="debug" class="btn btn-primary">Compare DEBUG</button>
         </form>
     </div>
 </section>
+
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+
+                <table class="table table-hover table-inverse">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Song</th>
+                        <th>Artist</th>
+                        <th>&Delta;</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Everything In Its Right Place</td>
+                        <td>Radiohead</td>
+                        <td>-10</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>Freedom Flight</td>
+                        <td>Shuggie Otis</td>
+                        <td>-?</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>Cirrus - Live</td>
+                        <td>Bonobo</td>
+                        <td>-15</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="col-lg-6">
+
+                <table class="table table-hover table-inverse">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Song</th>
+                        <th>Artist</th>
+                        <th>&Delta;</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Everything In Its Right Place</td>
+                        <td>Radiohead</td>
+                        <td>-10</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>Freedom Flight</td>
+                        <td>Shuggie Otis</td>
+                        <td>-?</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>Cirrus - Live</td>
+                        <td>Bonobo</td>
+                        <td>-15</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<footer class="footer">
+    <div class="container">
+        Hi
+    </div>
+</footer>
 
 <!--
 <form>
