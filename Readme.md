@@ -9,6 +9,11 @@ WIP
 - Build form
 - General UI
 - Validate input
+- Factor in multiple answers
 ## Possible enhancements
+- Top artists
+- Top albums
 - Investigate genres
 - Track images
+- Preview track
+- Timeless track (track with highest average position between lists)

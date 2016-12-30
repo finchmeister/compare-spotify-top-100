@@ -18,7 +18,12 @@
 
     .jumbotron {
         text-align: center;
+    }
 
+    @media (min-width: 576px) {
+        .jumbotron {
+            padding: 10rem 2rem;
+        }
     }
 
     section {
@@ -129,11 +134,11 @@ https://open.spotify.com/track/4g95pwP4GeV9DLO5nB0QAo"></textarea>
             <p>Then copy all the tracks to the clipboard again and paste them into the box below:</p>
 
             <div class="form-group">
-                <textarea class="form-control form-control-sm" rows="5" id="list1" name="list1" placeholder="https://open.spotify.com/track/31DVVa40JpTudyGDNC1ROW
-https://open.spotify.com/track/6P5UXKba6ougqoPmflqwKX
-https://open.spotify.com/track/6MheD6qKezwyZVtuHSeGbJ
+                <textarea class="form-control form-control-sm" rows="5" id="list1" name="list1" placeholder="https://open.spotify.com/track/1R2CpJXwERlLURyKaE1nWr
+https://open.spotify.com/track/305a2Skero7JOIEEm8NTG5
+https://open.spotify.com/track/07fB2SZNaI4otc0eqMhJWN
 ...
-https://open.spotify.com/track/4g95pwP4GeV9DLO5nB0QAo"></textarea>
+https://open.spotify.com/track/4My8vV76KJYVC3apdvFazJ"></textarea>
             </div>
 
 
@@ -150,7 +155,7 @@ https://open.spotify.com/track/4g95pwP4GeV9DLO5nB0QAo"></textarea>
         <div class="row">
             <div class="col-lg-6">
 
-                <table class="table table-hover table-inverse">
+                <table id="tableA" class="table table-hover table-inverse">
                     <thead>
                     <tr>
                         <th>#</th>
@@ -184,7 +189,7 @@ https://open.spotify.com/track/4g95pwP4GeV9DLO5nB0QAo"></textarea>
             </div>
             <div class="col-lg-6">
 
-                <table class="table table-hover table-inverse">
+                <table id="tableB" class="table table-hover table-inverse">
                     <thead>
                     <tr>
                         <th>#</th>
