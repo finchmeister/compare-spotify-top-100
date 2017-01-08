@@ -47,6 +47,9 @@
     button {
         background-color: rgb(47,213,102);
     }
+    .table td, .table th {
+        vertical-align: middle;
+    }
 </style>
 
 <body>
@@ -153,71 +156,23 @@ https://open.spotify.com/track/4My8vV76KJYVC3apdvFazJ"></textarea>
 <section>
     <div class="container">
         <div class="row">
-            <div class="col-lg-6">
 
-                <table id="tableA" class="table table-hover table-inverse">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Song</th>
-                        <th>Artist</th>
-                        <th>&Delta;</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Everything In Its Right Place</td>
-                        <td>Radiohead</td>
-                        <td>-10</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Freedom Flight</td>
-                        <td>Shuggie Otis</td>
-                        <td>-?</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Cirrus - Live</td>
-                        <td>Bonobo</td>
-                        <td>-15</td>
-                    </tr>
-                    </tbody>
+            <div class="col-xs-12">
+                <h2>Latest Year</h2>
+
+                <table id="tableNewer" class="table table-hover table-inverse">
+
                 </table>
 
             </div>
-            <div class="col-lg-6">
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <h2>Previous Year</h2>
 
-                <table id="tableB" class="table table-hover table-inverse">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Song</th>
-                        <th>Artist</th>
-                        <th>&Delta;</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Everything In Its Right Place</td>
-                        <td>Radiohead</td>
-                        <td>-10</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Freedom Flight</td>
-                        <td>Shuggie Otis</td>
-                        <td>-?</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Cirrus - Live</td>
-                        <td>Bonobo</td>
-                        <td>-15</td>
-                    </tr>
-                    </tbody>
+
+                <table id="tableOlder" class="table table-hover table-inverse">
+
                 </table>
 
             </div>
