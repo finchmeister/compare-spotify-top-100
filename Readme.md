@@ -15,6 +15,7 @@ WIP
     - Tab navs for each year
 - Top artists
 - Top albums
+- Put table rows in `<tbody></tbody>` for hover to work
 ## Possible enhancements
 - Investigate genres
 - ~~Track images~~

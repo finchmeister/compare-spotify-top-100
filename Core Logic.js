@@ -84,7 +84,6 @@
 
     app.comparePlaylists = function (listOlder, listNewer) {
 
-
         listOlder = app.getTracksFromList(listOlder);
         listNewer = app.getTracksFromList(listNewer);
 
@@ -121,8 +120,6 @@
             // The reciprocal results
             results.older[listNewer[i]] = typeof results.newer[listNewer[i]] != 'string' ? results.newer[i] : 'New'; //TODO
         }
-        //console.log('new res', results.newer); return;
-        //console.log('old res', results.older); return;
 
         for (i = 0; i < listOlder.length; i++) {
             diff.older[i] = results.older[listOlder[i]];
@@ -130,19 +127,37 @@
         delete results.older;
         results.older = diff.older;
 
-        console.log(trackIds.newer);
-        // The api can handle a max of 50, split the requests evenlyish
-        var chunkedArray = createGroupedArray(listNewer, 36);
+        app.getTrackDataAndUpdate(createGroupedArray(listNewer, 36), results.newer, 'tableNewer');
+        app.getTrackDataAndUpdate(createGroupedArray(listOlder, 36), results.older, 'tableOlder');
+    };
 
-        console.log(app.getTrackDataAndUpdate(chunkedArray, results.newer, 'tableNewer'));
-        console.log(app.getTrackDataAndUpdate(createGroupedArray(listOlder, 36), results.older, 'tableOlder'));
+    app.getArtistOccurrancesFromTransformedTracks = function (transformedTrackList) {
+        var artistOccurances = {};
+        for (var i = 0; i < transformedTrackList.length; i++) {
+            var artists = transformedTrackList[i].artists;
+            for (var j = 0; j < artists.length; j++) {
+                // @todo weight rankings via exponential function
+                if (artistOccurances[artists[j]] > 0) {
+                    artistOccurances[artists[j]]++;
+                }
+                else {
+                    artistOccurances[artists[j]] = 1;
+                }
+            }
+        }
+        return artistOccurances;
+    };
 
-
-
-
-
-
-
+    app.getTopArtists = function (artistOccurances, count) {
+        var sortedArtistOccurances = Object.keys(artistOccurances).sort(function(a,b){return artistOccurances[b]-artistOccurances[a]});
+        var topTracks = [];
+        for (var i = 0; i < count; i++) {
+            topTracks[i] = {
+                'name' : sortedArtistOccurances[i],
+                'count' : artistOccurances[sortedArtistOccurances[i]]
+            }
+        }
+        return topTracks;
     };
 
     /**
@@ -168,7 +183,10 @@
                 return app.transformTracklist(trackList, diff);
             })
             .then(function(transformedTrackList){
-                //console.log(transformedTrackList);
+                console.log(transformedTrackList);
+                var artistOccurrances = app.getArtistOccurrancesFromTransformedTracks(transformedTrackList);
+                console.log(app.getTopArtists(artistOccurrances, 10));
+
                 app.updateTable(transformedTrackList, tableId);
             });
     };
@@ -183,6 +201,7 @@
             for (var i = 0; i < tableColumnNames.length; i++) {
                 headerRow.insertCell(i).innerHTML = tableColumnNames[i];
             }
+
             // To avoid the rows being added to the table header
             table.appendChild(document.createElement('tbody').appendChild(document.createElement('tr')));
 
