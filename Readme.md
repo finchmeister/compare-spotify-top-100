@@ -16,6 +16,8 @@ WIP
 - Top artists
 - Top albums
 - Put table rows in `<tbody></tbody>` for hover to work
+- Everything in its right place bug (erroneous diff)
+- Sort fonts
 ## Possible enhancements
 - Investigate genres
 - ~~Track images~~

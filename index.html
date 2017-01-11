@@ -8,11 +8,13 @@
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js" integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK" crossorigin="anonymous"></script>
+    <!--<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">-->
 </head>
 
 <style>
     body {
         background-color: rgb(40,40,40);
+        /*font-family: 'Montserrat', sans-serif;*/
 
     }
 
@@ -155,31 +157,86 @@ https://open.spotify.com/track/4My8vV76KJYVC3apdvFazJ"></textarea>
 
 <section>
     <div class="container">
+
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#previousYear" role="tab">Previous Year</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#currentYear" role="tab">Current Year</a>
+            </li>
+        </ul>
+
+
         <div class="row">
 
-            <div class="col-xs-12">
-                <h2>Latest Year</h2>
+            <div class="tab-content">
+                <div class="tab-pane" id="previousYear" role="tabpanel">
+                    <div class="col-xs-12">
+                        <table id="tableOlder" class="table table-hover table-inverse">
 
-                <table id="tableNewer" class="table table-hover table-inverse">
+                        </table>
+                    </div>
 
-                </table>
+                </div>
+                <div class="tab-pane active" id="currentYear" role="tabpanel">
+                    <div class="col-xs-12">
+                        <table id="tableNewer" class="table table-hover table-inverse">
 
+                        </table>
+                    </div>
+
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-12">
-                <h2>Previous Year</h2>
 
-
-                <table id="tableOlder" class="table table-hover table-inverse">
-
-                </table>
-
-            </div>
         </div>
     </div>
 </section>
 
+<section id="topArtists">
+    <div class="container">
+
+
+        <div class="row">
+            <div class="col-xs-12">
+                <h2>Previous Year Top 5</h2>
+
+                <table class="table table-inverse">
+                    <!--<thead>
+                    <tr>
+                        <th>Artist</th>
+                        <th>Last Name</th>
+                        <th>Songs</th>
+                    </tr>
+                    </thead>-->
+                    <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td><img src="https://i.scdn.co/image/d0ce55a6452c832aed35bcdf4202c4b1c63f86e7"> </td>
+                        <td>Bonobo</td>
+                        <td>6</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>Jacob</td>
+                        <td>Thornton</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>Larry</td>
+                        <td>the Bird</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+
+
+
+            </div>
+        </div>
+    </div>
+
+</section>
 
 
 <footer class="footer">
@@ -409,7 +466,9 @@ https://open.spotify.com/track/4My8vV76KJYVC3apdvFazJ"></textarea>
     https://open.spotify.com/track/7swGurTfZlwx7mTOE8PpIc
 </div>
 
-
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 <script src="src/spotify-web-api.js"></script>
 <script src="Core%20Logic.js"></script>
 
