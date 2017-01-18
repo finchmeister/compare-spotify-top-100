@@ -195,7 +195,7 @@
 
         var table = document.getElementById(tableId);
         if (table.innerHTML == "") {
-            var tableColumnNames = ['#', 'Song', 'Artist', '&Delta;'];
+            /*var tableColumnNames = ['#', 'Song', 'Artist', '&Delta;'];
             var header = table.createTHead();
             var headerRow = header.insertRow(0);
             for (var i = 0; i < tableColumnNames.length; i++) {
@@ -204,16 +204,17 @@
 
             // To avoid the rows being added to the table header
             table.appendChild(document.createElement('tbody').appendChild(document.createElement('tr')));
+*/
 
             var position = 0;
             for (i = 0; i < transformedTrackList.length; i++) {
                 // Add row to table
                 position = i + 1;
-                var image = '<img src="' + transformedTrackList[i].image + '"> ';
                 var row = table.insertRow();
-                row.insertCell(0).outerHTML = '<th scope="row">' + position.toString() + '</th>';
-                row.insertCell(1).innerHTML = image + transformedTrackList[i].name;
-                row.insertCell(2).innerHTML = transformedTrackList[i].artists.join(', ');
+                row.insertCell(0).outerHTML = '<td class="track-position">' + position.toString() + '</td>';
+                row.insertCell(1).outerHTML = '<td class="track-art"><img src="' + transformedTrackList[i].image + '"></td>';
+                row.insertCell(2).innerHTML = '<div class="track-name">' + transformedTrackList[i].name + '</div>' + '<div class="track-artist">' + transformedTrackList[i].artists.join(', ') + '</div>';
+                // @todo work out arrows based on deltas
                 row.insertCell(3).innerHTML = transformedTrackList[i].delta;
             }
         } else {

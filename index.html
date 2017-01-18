@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js" integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK" crossorigin="anonymous"></script>
     <!--<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
 </head>
 
 <style>
@@ -52,6 +54,32 @@
     .table td, .table th {
         vertical-align: middle;
     }
+
+    .track-position {
+        font-size: 1.5em;
+        text-align: center;
+    }
+
+    .track-name {
+
+    }
+    .track-artist {
+        color: #848484;
+    }
+
+    .fa-arrow-up {
+        color: rgb(47,213,102);
+    }
+
+    .fa-arrow-down {
+        color: rgb(213, 39, 31);
+    }
+
+    .fa-star {
+        color: rgb(213, 186, 48);
+    }
+
+
 </style>
 
 <body>
@@ -156,9 +184,9 @@ https://open.spotify.com/track/4My8vV76KJYVC3apdvFazJ"></textarea>
 </section>
 
 <section>
-    <div class="container">
+    <div class="container-fluid">
 
-        <ul class="nav nav-tabs" role="tablist">
+        <!--<ul class="nav nav-tabs" role="tablist">
             <li class="nav-item">
                 <a class="nav-link" data-toggle="tab" href="#previousYear" role="tab">Previous Year</a>
             </li>
@@ -166,28 +194,28 @@ https://open.spotify.com/track/4My8vV76KJYVC3apdvFazJ"></textarea>
                 <a class="nav-link active" data-toggle="tab" href="#currentYear" role="tab">Current Year</a>
             </li>
         </ul>
-
+-->
 
         <div class="row">
 
-            <div class="tab-content">
-                <div class="tab-pane" id="previousYear" role="tabpanel">
-                    <div class="col-xs-12">
+            <!--<div class="tab-content">
+                <div class="tab-pane" id="previousYear" role="tabpanel">-->
+                    <div class="col-xs-6">
                         <table id="tableOlder" class="table table-hover table-inverse">
 
                         </table>
                     </div>
 
-                </div>
-                <div class="tab-pane active" id="currentYear" role="tabpanel">
-                    <div class="col-xs-12">
+                <!--</div>
+                <div class="tab-pane active" id="currentYear" role="tabpanel">-->
+                    <div class="col-xs-6">
                         <table id="tableNewer" class="table table-hover table-inverse">
 
                         </table>
                     </div>
 
-                </div>
-            </div>
+              <!--  </div>
+            </div>-->
 
         </div>
     </div>
@@ -234,6 +262,109 @@ https://open.spotify.com/track/4My8vV76KJYVC3apdvFazJ"></textarea>
 
             </div>
         </div>
+    </div>
+
+</section>
+
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <table class="table table-hover table-inverse">
+                    <!--<thead>
+                    <tr>
+                        <th>#</th>
+                        <th></th>
+                        <th>Track</th>
+                        <th>Pos</th>
+                    </tr>
+                    </thead>-->
+                    <tbody>
+                    <tr>
+                        <td class="track-position">1</td>
+                        <td class="track-art">
+                            <img src="https://i.scdn.co/image/d0ce55a6452c832aed35bcdf4202c4b1c63f86e7">
+                        </td>
+                        <td>
+                            <div class="track-name">Pieces</div>
+                            <div class="track-artist">Bonobo</div>
+                        </td>
+                        <td><i class="fa fa-arrow-up" aria-hidden="true"></i> 3</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td class="art">
+                            <div>
+                                <img src="https://i.scdn.co/image/d0ce55a6452c832aed35bcdf4202c4b1c63f86e7">
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <div id="artist1">Pieces</div>
+                                <div id="artist1">Bonobo</div>
+                            </div>
+                        </td>
+                        <td><i class="fa fa-star" aria-hidden="true"></i> 3</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td class="art">
+                            <div>
+                                <img src="https://i.scdn.co/image/d0ce55a6452c832aed35bcdf4202c4b1c63f86e7">
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <div id="artist1">Pieces</div>
+                                <div id="artist1">Bonobo</div>
+                            </div>
+                        </td>
+                        <td><i class="fa fa-arrow-up" aria-hidden="true"></i> 3</td>
+                    </tr>
+
+                    </tbody>
+
+                </table>
+            </div>
+
+            <div class="col-md-6">
+                <table class="table table-hover table-inverse">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Track</th>
+                        <th>Pos</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td><div id="artist1">Pieces</div>
+                            <div id="artist1">Bonobo</div>
+                        </td>
+                        <td>Up 3</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td><span id="artist1">Pieces</span>
+                            <span id="artist1">Bonobo</span>
+                        </td>
+                        <td>Up 3</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td><span id="artist1">Pieces</span>
+                            <span id="artist1">Bonobo</span>
+                        </td>
+                        <td>Up 3</td>
+                    </tr>
+                    </tbody>
+
+                </table>
+            </div>
+
+        </div>
+
     </div>
 
 </section>
