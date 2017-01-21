@@ -63,21 +63,22 @@
     };
 
     app.transformTracklist = function (trackList, delta) {
-        var transformedTracklist = [], artists = [];
-        for (var i = 0; i < trackList.length; i++) { //Newer List
+        let transformedTracklist = [], artists = [];
+        for (let i = 0; i < trackList.length; i++) { //Newer List
             artists = trackList[i].artists.map(function(a) { return a.name; });
             transformedTracklist[i] = {
                 'artists' : artists,
                 'name' : trackList[i].name,
                 'delta' : delta[i],
-                'image' : trackList[i].album.images[2].url
+                'image' : trackList[i].album.images[2].url,
+                'albumName' : trackList[i].album.name
             }
         }
         return transformedTracklist;
     };
 
     app.getTracksFromList = function (list) {
-        var separator = " "; // TODO be prepared this may change
+        let separator = " "; // TODO be prepared this may change
         list = list.split(separator);
         return list.map(function(url) { return url.substr(31,22); });
     };
@@ -92,71 +93,106 @@
             'older' : [],
             'newer' : []
         };
-        var trackIds = {
-            'older' : [],
-            'newer' : []
-        };
-        var diff = {
-            'older' : []
-        };
 
         var match, shift;
         // Work out the diff based on the newer list
+
         for (var i = 0; i < listNewer.length; i++) {
             match = shift = 0;
 
             for (var j = 0; j < listOlder.length; j++) {
 
-                if (listNewer[i] === listOlder[j]) {
+                if (listNewer[i] == listOlder[j]) {
                     // We have a match, work out the shift
                     match = 1;
                     shift = j - i;
+                    results.older[j] = i + 1;
                     break;
                 }
+
             }
-
-            results.newer[i] = match ? shift : 'New';
-            //results.newer[i] = match ? shift : 'New';
-            // The reciprocal results
-            results.older[listNewer[i]] = typeof results.newer[listNewer[i]] != 'string' ? results.newer[i] : 'New'; //TODO
+            results.newer[i] = match ? j + 1 : 'New';
         }
-
-        for (i = 0; i < listOlder.length; i++) {
-            diff.older[i] = results.older[listOlder[i]];
-        }
-        delete results.older;
-        results.older = diff.older;
-
         app.getTrackDataAndUpdate(createGroupedArray(listNewer, 36), results.newer, 'tableNewer');
         app.getTrackDataAndUpdate(createGroupedArray(listOlder, 36), results.older, 'tableOlder');
     };
 
     app.getArtistOccurrancesFromTransformedTracks = function (transformedTrackList) {
-        var artistOccurances = {};
-        for (var i = 0; i < transformedTrackList.length; i++) {
+        let artistOccurances = {};
+        console.log(transformedTrackList);
+        let tracklistLen = transformedTrackList.length;
+        for (var i = 0; i < tracklistLen; i++) {
             var artists = transformedTrackList[i].artists;
             for (var j = 0; j < artists.length; j++) {
-                // @todo weight rankings via exponential function
-                if (artistOccurances[artists[j]] > 0) {
-                    artistOccurances[artists[j]]++;
+                let power = (tracklistLen - i)/tracklistLen;
+                let modifier = Math.exp(power); // Exponential ranking
+                //let modifier = power; // Linear ranking
+                if (typeof artistOccurances[artists[j]] !== 'undefined') {
+                    if (artistOccurances[artists[j]]['count'] > 0) {
+                        artistOccurances[artists[j]]['weighted'] += modifier;
+                        artistOccurances[artists[j]]['count']++;
+                        artistOccurances[artists[j]]['songs'].push(transformedTrackList[i].name);
+                    }
                 }
                 else {
-                    artistOccurances[artists[j]] = 1;
+                    artistOccurances[artists[j]] = {
+                        weighted : modifier,
+                        count : 1,
+                        songs : [transformedTrackList[i].name],
+                        albumArt : transformedTrackList[i].image
+                    };
                 }
+                break; // Decided not to factor in supporting artists
             }
         }
         return artistOccurances;
     };
+    app.getAlbumOccurrancesFromTransformedTracks = function (transformedTrackList) {
+        let albumOccurances = {};
+        let tracklistLen = transformedTrackList.length;
+        for (let i = 0; i < tracklistLen; i++) {
+            let albumName = transformedTrackList[i].albumName;
+            let power = (tracklistLen - i)/tracklistLen;
+            let modifier = Math.exp(power); // Exponential ranking
+            //let modifier = power; // Linear ranking
+            if (typeof albumOccurances[albumName] !== 'undefined') {
+                if (albumOccurances[albumName]['count'] > 0) {
+                    albumOccurances[albumName]['weighted'] += modifier;
+                    albumOccurances[albumName]['count']++;
+                    albumOccurances[albumName]['songs'].push(transformedTrackList[i].name);
+                }
+            }
+            else {
+                albumOccurances[albumName] = {
+                    weighted : modifier,
+                    count : 1,
+                    artist : transformedTrackList[i].artists[0],
+                    album : transformedTrackList[i].albumName,
+                    albumArt : transformedTrackList[i].image,
+                    songs : [transformedTrackList[i].name]
+                };
+            }
+        }
+        return albumOccurances;
+    };
 
-    app.getTopArtists = function (artistOccurances, count) {
-        var sortedArtistOccurances = Object.keys(artistOccurances).sort(function(a,b){return artistOccurances[b]-artistOccurances[a]});
+    /** real bait method */
+    app.getTopArtistsOrAlbums = function (occurances, count, albums=false) {
+        var sortedOccurances = Object.keys(occurances).sort(function(a,b){return occurances[b].weighted-occurances[a].weighted});
         var topTracks = [];
         for (var i = 0; i < count; i++) {
             topTracks[i] = {
-                'name' : sortedArtistOccurances[i],
-                'count' : artistOccurances[sortedArtistOccurances[i]]
+                'name' : sortedOccurances[i],
+                'songs' : occurances[sortedOccurances[i]].songs,
+                'albumArt' : occurances[sortedOccurances[i]].albumArt,
+                'count' : occurances[sortedOccurances[i]].count,
+                'weighted' : occurances[sortedOccurances[i]].weighted
+            };
+            if (albums) {
+                topTracks[i]['artist'] = occurances[sortedOccurances[i]].artist;
             }
         }
+        console.log(topTracks);
         return topTracks;
     };
 
@@ -183,43 +219,110 @@
                 return app.transformTracklist(trackList, diff);
             })
             .then(function(transformedTrackList){
-                console.log(transformedTrackList);
-                var artistOccurrances = app.getArtistOccurrancesFromTransformedTracks(transformedTrackList);
-                console.log(app.getTopArtists(artistOccurrances, 10));
-
                 app.updateTable(transformedTrackList, tableId);
+                let artistOccurrances = app.getArtistOccurrancesFromTransformedTracks(transformedTrackList);
+                let topArtists = app.getTopArtistsOrAlbums(artistOccurrances, 10);
+                app.updateTopArtistsTable(topArtists, tableId);
+                let albumOccurrances = app.getAlbumOccurrancesFromTransformedTracks(transformedTrackList);
+                let topAlbums = app.getTopArtistsOrAlbums(albumOccurrances, 10, true);
+                app.updateTopAlbumsTable(topAlbums, tableId);
+
+                app.doUnqiueArtists(artistOccurrances, tableId);
+                console.log(document.getElementById('results').style);
+                document.getElementById('results').className = '';
             });
+    };
+
+    app.doUnqiueArtists = function (artistOccurrances, tableId) {
+        document.getElementById(tableId + '-artist-diversity').innerText = Object.keys(artistOccurrances).length;
     };
 
     app.updateTable = function (transformedTrackList, tableId) {
 
-        var table = document.getElementById(tableId);
+        let table = document.getElementById(tableId);
+        let newer = tableId == 'tableNewer';
         if (table.innerHTML == "") {
-            /*var tableColumnNames = ['#', 'Song', 'Artist', '&Delta;'];
-            var header = table.createTHead();
-            var headerRow = header.insertRow(0);
-            for (var i = 0; i < tableColumnNames.length; i++) {
-                headerRow.insertCell(i).innerHTML = tableColumnNames[i];
-            }
 
-            // To avoid the rows being added to the table header
-            table.appendChild(document.createElement('tbody').appendChild(document.createElement('tr')));
-*/
-
-            var position = 0;
-            for (i = 0; i < transformedTrackList.length; i++) {
+            let position = 0;
+            for (let i = 0; i < transformedTrackList.length; i++) {
                 // Add row to table
                 position = i + 1;
-                var row = table.insertRow();
+                let row = table.insertRow();
                 row.insertCell(0).outerHTML = '<td class="track-position">' + position.toString() + '</td>';
                 row.insertCell(1).outerHTML = '<td class="track-art"><img src="' + transformedTrackList[i].image + '"></td>';
                 row.insertCell(2).innerHTML = '<div class="track-name">' + transformedTrackList[i].name + '</div>' + '<div class="track-artist">' + transformedTrackList[i].artists.join(', ') + '</div>';
-                // @todo work out arrows based on deltas
-                row.insertCell(3).innerHTML = transformedTrackList[i].delta;
+                row.insertCell(3).innerHTML = (function(position, oppositePos, newer = true) {
+                    let icons = '';
+                    let cellHTML = '';
+                    if (typeof oppositePos == 'number') {
+                        let delta = oppositePos - position;
+                        delta = newer ? delta : delta * -1;
+                        let relative = newer ? 'LY' : 'NY';
+                        if (delta > 0) {
+                            icons = '<i class="fa fa-arrow-up" aria-hidden="true"></i>';
+                        }
+                        else if (delta == 0) {
+                            icons = '';
+                        }
+                        else if (delta < 0) {
+                            icons = '<i class="fa fa-arrow-down" aria-hidden="true"></i>';
+                        }
+                        cellHTML = '<span class="relative-year">' + relative + '</span> ' + oppositePos + ' ' + icons;
+                    }
+                    else {
+                        if (newer) {
+                            cellHTML = '<i class="fa fa-star" aria-hidden="true">';
+                        }
+                        else {
+                            cellHTML = '<span class="relative-year">NY</span> 100+ <i class="fa fa-arrow-down" aria-hidden="true"></i>';
+                        }
+                    }
+                    return cellHTML;
+                } (position, transformedTrackList[i].delta, newer));
             }
         } else {
             table.innerHTML = "";
             app.updateTable(transformedTrackList, tableId);
+        }
+    };
+
+    app.updateTopArtistsTable = function(topArtists, tableId) {
+        let table = document.getElementById(tableId + '-topArtists');
+        let position = 0;
+        for (let i = 0; i < topArtists.length; i++) {
+            position = i + 1;
+            let row = table.insertRow();
+            row.insertCell(0).innerText = position.toString();
+            row.insertCell(1).outerHTML = '<td class="track-art"><img src="' + topArtists[i].albumArt + '"></td>';
+            let artistAndTrackDataHTML = '<div class="top-artist-name">' + topArtists[i].name + '</div>' +
+                '<div class="top-artist-tracks">' +
+                '<ul class="top-artist-tracklist">';
+            for (let j = 0; j < topArtists[i].songs.length; j++) {
+                artistAndTrackDataHTML += '<li>' + topArtists[i].songs[j] + '</li>';
+            }
+            artistAndTrackDataHTML += '</ul></div>';
+            row.insertCell(2).innerHTML = artistAndTrackDataHTML;
+            row.insertCell(3).outerHTML ='<td class="track-position">'+ topArtists[i].count +'</td>';
+        }
+    };
+    app.updateTopAlbumsTable = function(topAlbums, tableId) {
+        let table = document.getElementById(tableId + '-topAlbums');
+        let position = 0;
+        for (let i = 0; i < topAlbums.length; i++) {
+            position = i + 1;
+            let row = table.insertRow();
+            row.insertCell(0).innerText = position.toString();
+            row.insertCell(1).outerHTML = '<td class="track-art"><img src="' + topAlbums[i].albumArt + '"></td>';
+            let artistAndTrackDataHTML = '<div class="top-album-name">' + topAlbums[i].name + '</div>' +
+                '<div class="top-album-artist-name">' + topAlbums[i].artist + '</div>'
+                /*+ '<div class="top-artist-tracks">' +
+                '<ul class="top-artist-tracklist">';
+            for (let j = 0; j < topAlbums[i].songs.length; j++) {
+                artistAndTrackDataHTML += '<li>' + topAlbums[i].songs[j] + '</li>';
+            }
+            artistAndTrackDataHTML += '</ul></div>';*/
+            row.insertCell(2).innerHTML = artistAndTrackDataHTML;
+            row.insertCell(3).outerHTML ='<td class="track-position">'+ topAlbums[i].count +'</td>';
         }
     };
 

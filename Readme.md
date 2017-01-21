@@ -2,6 +2,15 @@
 
 WIP
 
+## Outstanding
+
+- ~~Depending on position, display star, arrow etc.~~
+  
+ 
+- Introduction text
+- General wording tidy up
+- Jumbotron background
+
 ## TODO:
 - ~~Output results~~
     - ~~Include relative change~~
@@ -10,12 +19,8 @@ WIP
     - Validate input
     - Submit input to compare method
 - Tidy promise code by making recursive
-- Arrows for changes, stars for new
-- General UI
-    - Tab navs for each year
 - Top artists
 - Top albums
-- Put table rows in `<tbody></tbody>` for hover to work
 - Everything in its right place bug (erroneous diff)
 - Sort fonts
 ## Possible enhancements
