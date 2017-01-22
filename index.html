@@ -22,6 +22,11 @@
 
     .jumbotron {
         text-align: center;
+
+    }
+
+    #jumbotron-main {
+        margin-bottom: 0;
     }
 
     @media (min-width: 576px) {
@@ -32,15 +37,17 @@
 
     section {
         color: #fff;
+        padding: 2em 0 2em 0;
     }
 
-    .intro {
-        /*background-color: black;*/
+    section.intro {
+        background-color: black;
     }
 
     .screenshot {
         max-width: 400px;
     }
+
 
     footer {
         color: #fff;
@@ -52,9 +59,25 @@
         display: none;
     }
 
-    button {
-        background-color: rgb(47,213,102);
+    .btn-primary {
+        background-color: rgb(29,186,84);
+        border-color: rgb(29,186,84);
+
+        border-radius: 2em;
+        text-transform: uppercase;
     }
+
+    .btn-primary:hover{
+        background-color: rgb(27,216,94);
+        border-color: rgb(27,216,94);
+    }
+    .btn-primary:active,.btn-primary:focus, .btn-primary:active:focus {
+        background-color: rgb(29, 171, 85);
+        border-color: rgb(29, 171, 85);
+        outline: none;
+    }
+
+
     .table td, .table th {
         vertical-align: middle;
     }
@@ -109,6 +132,16 @@
         color: #848484;
     }
 
+    .artist-diversity {
+
+    }
+
+    .artist-diversity-number {
+        font-size: 7em;
+        margin: auto;
+        width: 50%  ;
+    }
+
 
 </style>
 
@@ -125,7 +158,7 @@
 
 </nav>
 
-<div class="jumbotron jumbotron-fluid">
+<div class="jumbotron jumbotron-fluid" id="jumbotron-main">
     <div class="container">
         <h1 class="display-3">Compare Spotify Top 100 Playlists</h1>
         <p></p>
@@ -136,6 +169,9 @@
         <p class="lead">Discover how your music taste has evolved in the last year.</p>
         You need to be on desktop version
         You must have 2 years of top 100 spotify playlists to compare
+        If you don't have access to both your playlists, click me to demo what I've been listening to
+        <button type="submit" id="btn-demo" class="btn btn-primary">Compare DEBUG</button>
+        <!--<a class="btn btn-default" id="btn-demo" href="#tet" role="button">Demo</a>-->
     </div>
 
 </section>
@@ -208,7 +244,6 @@ https://open.spotify.com/track/4My8vV76KJYVC3apdvFazJ"></textarea>
             <h2>Step 3:</h2>
             <p>Hit compare</p>
             <button type="submit" id="mainSubmit" class="btn btn-primary">Compare</button>
-            <button type="submit" id="debug" class="btn btn-primary">Compare DEBUG</button>
         </form>
     </div>
 </section>
@@ -244,8 +279,6 @@ https://open.spotify.com/track/4My8vV76KJYVC3apdvFazJ"></textarea>
         </div>
     </section>
 
-    <hr>
-
     <section id="topArtists">
         <div class="container-fluid">
             <div class="row">
@@ -273,8 +306,6 @@ https://open.spotify.com/track/4My8vV76KJYVC3apdvFazJ"></textarea>
 
     </section>
 
-    <hr>
-
     <section id="topAlbums">
         <div class="container-fluid">
             <div class="row">
@@ -301,8 +332,6 @@ https://open.spotify.com/track/4My8vV76KJYVC3apdvFazJ"></textarea>
         </div>
     </section>
 
-    <hr>
-
     <section id="artist-diversity">
         <div class="container-fluid">
             <div class="row">
@@ -313,23 +342,19 @@ https://open.spotify.com/track/4My8vV76KJYVC3apdvFazJ"></textarea>
             <div class="row">
 
                 <div class="col-md-6">
-                    <div id="tableOlder-artist-diversity">
-
-                    </div>
-                    unqiue artists
+                    <span id="tableOlder-artist-diversity" class="artist-diversity-number"></span>
+                    <span class="relative-year">Unique Artists</span>
                 </div>
                 <div class="col-md-6">
-                    <div id="tableNewer-artist-diversity">
+                    <span id="tableNewer-artist-diversity" class="artist-diversity-number"></span>
+                    <span class="relative-year">Unique Artists</span>
 
-                    </div>
-                    unqiue artists
                 </div>
 
             </div>
 
         </div>
     </section>
-
 </div>
 
 
@@ -341,19 +366,6 @@ https://open.spotify.com/track/4My8vV76KJYVC3apdvFazJ"></textarea>
     </div>
 </footer>
 
-<!--
-<form>
-    2015:
-
-    <textarea name="listA" rows="101" cols="55">
-</textarea>
-
-    2016:
-    <textarea name="listB" rows="101" cols="55">
-</textarea>
-    <button>Compare</button>
-</form>
--->
 
 <div id="2015">
     https://open.spotify.com/track/31DVVa40JpTudyGDNC1ROW
@@ -562,7 +574,13 @@ https://open.spotify.com/track/4My8vV76KJYVC3apdvFazJ"></textarea>
     https://open.spotify.com/track/7swGurTfZlwx7mTOE8PpIc
 </div>
 
+<!--
 <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+-->
+<script
+        src="https://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+        crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 <script src="src/spotify-web-api.js"></script>

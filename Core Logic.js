@@ -15,7 +15,7 @@
      *
      ****************************************************************************/
 
-    document.getElementById("debug").addEventListener("click", function(event){
+    document.getElementById("btn-demo").addEventListener("click", function(event){
         event.preventDefault();
         listOlder = document.getElementById('2015').innerText;
         listNewer = document.getElementById('2016').innerText;
@@ -230,6 +230,18 @@
                 app.doUnqiueArtists(artistOccurrances, tableId);
                 console.log(document.getElementById('results').style);
                 document.getElementById('results').className = '';
+
+
+                // Using jQuery's animate() method to add smooth page scroll
+                // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
+                let hash = '#results';
+                $('html, body').animate({
+                    scrollTop: $(hash).offset().top
+                }, 800, function(){
+
+                    // Add hash (#) to URL when done scrolling (default click behavior)
+                    window.location.hash = hash;
+                });
             });
     };
 
