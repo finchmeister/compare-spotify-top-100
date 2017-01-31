@@ -17,8 +17,19 @@
 
     document.getElementById("btn-demo").addEventListener("click", function(event){
         event.preventDefault();
-        listOlder = document.getElementById('2015').innerText;
-        listNewer = document.getElementById('2016').innerText;
+        listOlder = top2015;
+        //console.log(listOlder);
+        listNewer = top2016;
+
+        //listOlder = document.getElementById('2015').innerText;
+        //console.log(listOlder);
+        //console.log(top2015 == listOlder);
+
+        //listNewer = document.getElementById('2016').innerText;
+
+
+
+
         app.comparePlaylists(listOlder, listNewer);
     });
 
@@ -78,8 +89,7 @@
     };
 
     app.getTracksFromList = function (list) {
-        let separator = " "; // TODO be prepared this may change
-        list = list.split(separator);
+        list = list.split(/\s+/);
         return list.map(function(url) { return url.substr(31,22); });
     };
 
@@ -119,7 +129,6 @@
 
     app.getArtistOccurrancesFromTransformedTracks = function (transformedTrackList) {
         let artistOccurances = {};
-        console.log(transformedTrackList);
         let tracklistLen = transformedTrackList.length;
         for (var i = 0; i < tracklistLen; i++) {
             var artists = transformedTrackList[i].artists;
@@ -192,7 +201,6 @@
                 topTracks[i]['artist'] = occurances[sortedOccurances[i]].artist;
             }
         }
-        console.log(topTracks);
         return topTracks;
     };
 
@@ -228,14 +236,13 @@
                 app.updateTopAlbumsTable(topAlbums, tableId);
 
                 app.doUnqiueArtists(artistOccurrances, tableId);
-                console.log(document.getElementById('results').style);
                 document.getElementById('results').className = '';
 
             })
             .then(function(){
                 // Using jQuery's animate() method to add smooth page scroll
                 // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
-                let hash = '#results';
+                let hash = '#results-scroll-point';
                 $('html, body').animate({
                     scrollTop: $(hash).offset().top
                 }, 800, function(){
