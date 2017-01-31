@@ -231,7 +231,8 @@
                 console.log(document.getElementById('results').style);
                 document.getElementById('results').className = '';
 
-
+            })
+            .then(function(){
                 // Using jQuery's animate() method to add smooth page scroll
                 // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
                 let hash = '#results';
@@ -242,7 +243,8 @@
                     // Add hash (#) to URL when done scrolling (default click behavior)
                     window.location.hash = hash;
                 });
-            });
+            })
+        ;
     };
 
     app.doUnqiueArtists = function (artistOccurrances, tableId) {

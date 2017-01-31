@@ -20,6 +20,10 @@
 
     }
 
+    .navbar-dark {
+        background-color: black!important;
+    }
+
     .jumbotron {
         text-align: center;
 
@@ -33,6 +37,10 @@
         .jumbotron {
             padding: 10rem 2rem;
         }
+    }
+
+    .centre-button {
+        text-align: center;
     }
 
     section {
@@ -59,6 +67,10 @@
         display: none;
     }
 
+    .btn {
+        padding: 1rem 2rem;
+    }
+
     .btn-primary {
         background-color: rgb(29,186,84);
         border-color: rgb(29,186,84);
@@ -77,6 +89,13 @@
         outline: none;
     }
 
+    #results {
+        background-color: black;
+    }
+
+    .table-inverse {
+        background-color: rgb(40,40,40);
+    }
 
     .table td, .table th {
         vertical-align: middle;
@@ -166,41 +185,55 @@
 </div>
 <section class="intro">
     <div class="container">
-        <p class="lead">Discover how your music taste has evolved in the last year.</p>
-        You need to be on desktop version
-        You must have 2 years of top 100 spotify playlists to compare
-        If you don't have access to both your playlists, click me to demo what I've been listening to
-        <button type="submit" id="btn-demo" class="btn btn-primary">Compare DEBUG</button>
+        <p class="lead">Compare your most recent Top 100 playlists to discover how your music taste has evolved - unlocking your
+        most played tracks, artists and albums for each year.</p>
+        <p>You'll need:</p>
+            <ul>
+                <li>To have retained your 2 most recent Spotify Top 100 playlists</li>
+                <li>Be on the desktop version</li>
+            </ul>
+        <p>If you don't have 2 playlists, it's cool, hit the demo me button below to see how it should work.</p>
+        <div class="centre-button">
+            <button type="submit" id="btn-demo" class="btn btn-primary">Demo Me</button>
+        </div>
         <!--<a class="btn btn-default" id="btn-demo" href="#tet" role="button">Demo</a>-->
     </div>
 
 </section>
 
+<div></div>
 
 <section id="howto">
     <div class="container">
         <h2>Step 1:</h2>
-        <p>In Spotify, search for your top 100 playlist from last year.</p>
+        <p>First you gotta find your playlists. In Spotify, search for your top 100 playlist from last year.</p>
         <div class="row">
             <div class="col-lg-4 col-sm-6 col-xs-8">
 
                 <figure class="figure">
                     <img src="images/find2015-1.png" class="figure-img img-fluid rounded">
-                    <figcaption class="figure-caption">Spotify didn't automatically save your 2015 top tracks so the playlist is likely to be named differently</figcaption>
+                    <figcaption class="figure-caption">Spotify didn't automatically save your 2015 top tracks so the playlist is likely to be named differently.</figcaption>
                 </figure>
             </div>
 
         </div>
 
         <h2>Step 2:</h2>
-        <p>Select the first track of the playlist then <kbd><kbd>ctrl</kbd> + <kbd>a</kbd></kbd>, <kbd><kbd>ctrl</kbd> + <kbd>c</kbd></kbd> to copy all the ordered Spotify track Ids to your clipboard.
+        <p>Make sure the playlist is in the correct order, then select the first track of the playlist and <kbd><kbd>ctrl</kbd> + <kbd>a</kbd></kbd>, <kbd><kbd>ctrl</kbd> + <kbd>c</kbd></kbd> to copy all the ordered Spotify track Ids to your clipboard.
             </p>
         <div class="row">
             <div class="col-lg-4 col-sm-6 col-xs-8">
-                <img src="images/find2015-2.png" alt="step 1" class="img-fluid rounded">
+                <figure class="figure">
+                    <img src="images/find2015-2.png" class="figure-img img-fluid rounded">
+                    <figcaption class="figure-caption">See the first track selected.</figcaption>
+
+                </figure>
             </div>
             <div class="col-lg-4 col-sm-6 col-xs-8">
-                <img src="images/find2015-3.png" alt="step 1" class="img-fluid rounded">
+                <figure class="figure">
+                    <img src="images/find2015-3.png" class="figure-img img-fluid rounded">
+                    <figcaption class="figure-caption">After <kbd><kbd>ctrl</kbd> + <kbd>a</kbd></kbd> you should see them all selected.</figcaption>
+                </figure>
             </div>
         </div>
 
@@ -230,7 +263,7 @@ https://open.spotify.com/track/4g95pwP4GeV9DLO5nB0QAo"></textarea>
                 </div>
 
             </div>
-            <p>Then copy all the tracks to the clipboard again and paste them into the box below:</p>
+            <p>Copy all the tracks to the clipboard again and paste them into the box below:</p>
 
             <div class="form-group">
                 <textarea class="form-control form-control-sm" rows="5" id="list1" name="list1" placeholder="https://open.spotify.com/track/1R2CpJXwERlLURyKaE1nWr
@@ -242,7 +275,7 @@ https://open.spotify.com/track/4My8vV76KJYVC3apdvFazJ"></textarea>
 
 
             <h2>Step 3:</h2>
-            <p>Hit compare</p>
+            <p>Compare that shit</p>
             <button type="submit" id="mainSubmit" class="btn btn-primary">Compare</button>
         </form>
     </div>
