@@ -109,6 +109,10 @@
         outline: none;
     }
 
+    #error-message {
+        padding-top: 2em;
+    }
+
     #results {
         background-color: rgb(18,18,18);
     }
@@ -321,6 +325,12 @@ https://open.spotify.com/track/4My8vV76KJYVC3apdvFazJ"></textarea>
                 <button type="submit" id="mainSubmit" class="btn btn-primary">Compare</button>
             </div>
         </form>
+
+        <div id="error-message" class="hidden">
+            <div class="alert alert-danger" role="alert">
+                <strong>Validation failure!</strong><span id="validation-warning"></span>
+            </div>
+        </div>
     </div>
 </section>
 <div id="results-scroll-point"></div>
@@ -439,9 +449,6 @@ https://open.spotify.com/track/4My8vV76KJYVC3apdvFazJ"></textarea>
     </section>
 </div>
 
-
-
-
 <footer class="footer about">
     <div class="container">
         <p class="lead">
@@ -461,7 +468,7 @@ https://open.spotify.com/track/4My8vV76KJYVC3apdvFazJ"></textarea>
 <footer class="bottom-banner">
     <div class="container">
         <p class="lead">
-            finchhemsier
+            >_ finchmeister
         </p>
     </div>
 </footer>

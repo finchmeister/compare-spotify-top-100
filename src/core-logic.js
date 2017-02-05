@@ -6,6 +6,7 @@
 
     var app = {};
     var spotifyApi = new SpotifyWebApi();
+    var alreadyDone = 0;
 
     var listOlder, listNewer;
 
@@ -17,26 +18,17 @@
 
     document.getElementById("btn-demo").addEventListener("click", function(event){
         event.preventDefault();
-        listOlder = top2015;
-        //console.log(listOlder);
+        listOlder = top2015; // Obtained from demo-data'js
         listNewer = top2016;
-
-        //listOlder = document.getElementById('2015').innerText;
-        //console.log(listOlder);
-        //console.log(top2015 == listOlder);
-
-        //listNewer = document.getElementById('2016').innerText;
-
-
-
-
         app.comparePlaylists(listOlder, listNewer);
     });
 
-    document.getElementById("mainSubmit").addEventListener("click", function(event){
+    document.getElementById("compareTop100").addEventListener("submit", function(event){
         event.preventDefault();
-        // @todo: Get the form values and pass them to app.comparePlaylists()
-    });
+        listOlder = document.getElementById('list2').value; // Obtained from the form
+        listNewer = document.getElementById('list1').value;
+        app.comparePlaylists(listOlder, listNewer);
+       });
 
     /*****************************************************************************
      *
@@ -73,6 +65,12 @@
 
     };
 
+    /**
+     * Transforms the spotify api response into a simpler object for processing
+     * @param trackList
+     * @param delta
+     * @returns {Array}
+     */
     app.transformTracklist = function (trackList, delta) {
         let transformedTracklist = [], artists = [];
         for (let i = 0; i < trackList.length; i++) { //Newer List
@@ -89,14 +87,71 @@
     };
 
     app.getTracksFromList = function (list) {
-        list = list.split(/\s+/);
+        list = list.trim().split(/\s+/);
         return list.map(function(url) { return url.substr(31,22); });
+    };
+
+    app.validateTracksFromList = function (list) {
+        list = app.getTracksFromList(list);
+        let response = {
+            success : 1,
+            list : list,
+            error : ''
+        };
+        let trackIdRegex = new RegExp("^[a-zA-Z0-9]{22}$");
+
+        console.log(list);
+
+        if (list.length == 1) {
+            return {
+                success : 0,
+                error : 'Please copy your playlists into the fields'
+            };
+        }
+        else if (list.length < 90 || list.length > 105) {
+            return {
+                success : 0,
+                error : 'Incorrect track list size'
+            };
+        }
+        for (let i = 0; i < list.length; i++) {
+            if (!trackIdRegex.test(list[i])) {
+                return {
+                    success : 0,
+                    error : 'Url formatting'
+                }
+            }
+        }
+        return response;
+    };
+
+    app.displayError = function (errorText) {
+        document.getElementById('error-message').className = '';
+        document.getElementById('validation-warning').innerText = ' ' + errorText;
     };
 
     app.comparePlaylists = function (listOlder, listNewer) {
 
-        listOlder = app.getTracksFromList(listOlder);
-        listNewer = app.getTracksFromList(listNewer);
+        if (alreadyDone) {
+            // Already done, do a warning.
+            console.log("You've already done this, reset the page");
+            return;
+        }
+
+        let listOlderResponse = app.validateTracksFromList(listOlder);
+        let listNewerResponse = app.validateTracksFromList(listNewer);
+
+        if (!listOlderResponse.success) {
+            app.displayError(listOlderResponse.error);
+            return;
+        }
+        else if (!listNewerResponse.success) {
+            app.displayError(listNewerResponse.error);
+            return;
+        }
+
+        listOlder = listOlderResponse.list;
+        listNewer = listNewerResponse.list;
 
         // Define separately to avoid reference issues
         var results = {
@@ -156,6 +211,7 @@
         }
         return artistOccurances;
     };
+
     app.getAlbumOccurrancesFromTransformedTracks = function (transformedTrackList) {
         let albumOccurances = {};
         let tracklistLen = transformedTrackList.length;
@@ -205,10 +261,15 @@
     };
 
     /**
-     *
+     * Once we've got
+     * @param chunkedArray
+     * @param diff
+     * @param tableId
      */
     app.getTrackDataAndUpdate = function (chunkedArray, diff, tableId) {
         var trackList = [];
+        // Query the api in chunks asynchronously, using promises to preserve ordering. It would be much nicer to call
+        // this recursively so that we're not constrained by the tracklist
         spotifyApi.getTracks(chunkedArray[0])
             .then(function(data) {
                 trackList = trackList.concat(data.tracks);
@@ -222,36 +283,26 @@
                 trackList = trackList.concat(data.tracks);
                 return trackList;
             })
+            // Now we have all the track data from spotify
             .then(function(trackList){
-                //console.log(trackList);
                 return app.transformTracklist(trackList, diff);
             })
+            // With the transformed track data, do all the html shit
             .then(function(transformedTrackList){
-                app.updateTable(transformedTrackList, tableId);
-                let artistOccurrances = app.getArtistOccurrancesFromTransformedTracks(transformedTrackList);
-                let topArtists = app.getTopArtistsOrAlbums(artistOccurrances, 10);
-                app.updateTopArtistsTable(topArtists, tableId);
-                let albumOccurrances = app.getAlbumOccurrancesFromTransformedTracks(transformedTrackList);
-                let topAlbums = app.getTopArtistsOrAlbums(albumOccurrances, 10, true);
-                app.updateTopAlbumsTable(topAlbums, tableId);
-
-                app.doUnqiueArtists(artistOccurrances, tableId);
-                document.getElementById('results').className = '';
-
+                app.updatePageWithSpotifyData(transformedTrackList, tableId);
             })
             .then(function(){
-                // Using jQuery's animate() method to add smooth page scroll
-                // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
+                // Scroll it, forced to use jquery here
                 let hash = '#results-scroll-point';
                 $('html, body').animate({
                     scrollTop: $(hash).offset().top
                 }, 800, function(){
-
                     // Add hash (#) to URL when done scrolling (default click behavior)
                     window.location.hash = hash;
                 });
-            })
-        ;
+
+                alreadyDone = 1; // Update the complete flag
+            });
     };
 
     app.doUnqiueArtists = function (artistOccurrances, tableId) {
@@ -345,6 +396,19 @@
             row.insertCell(2).innerHTML = artistAndTrackDataHTML;
             row.insertCell(3).outerHTML ='<td class="track-position">'+ topAlbums[i].count +'</td>';
         }
+    };
+
+    app.updatePageWithSpotifyData = function (transformedTrackList, tableId) {
+        app.updateTable(transformedTrackList, tableId);
+        let artistOccurrances = app.getArtistOccurrancesFromTransformedTracks(transformedTrackList);
+        let topArtists = app.getTopArtistsOrAlbums(artistOccurrances, 10);
+        app.updateTopArtistsTable(topArtists, tableId);
+        let albumOccurrances = app.getAlbumOccurrancesFromTransformedTracks(transformedTrackList);
+        let topAlbums = app.getTopArtistsOrAlbums(albumOccurrances, 10, true);
+        app.updateTopAlbumsTable(topAlbums, tableId);
+
+        app.doUnqiueArtists(artistOccurrances, tableId);
+        document.getElementById('results').className = '';
     };
 
     // Example track response
