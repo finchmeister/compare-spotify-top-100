@@ -57,40 +57,22 @@
      *
      ****************************************************************************/
 
+
     /**
-     * @todo validate spotify URL via regex and extract track ids
+     * Splits the pasted list into an array of track ids
      * @param list
-     */
-    app.validateList = function (list) {
-
-    };
-
-    /**
-     * Transforms the spotify api response into a simpler object for processing
-     * @param trackList
-     * @param delta
      * @returns {Array}
      */
-    app.transformTracklist = function (trackList, delta) {
-        let transformedTracklist = [], artists = [];
-        for (let i = 0; i < trackList.length; i++) { //Newer List
-            artists = trackList[i].artists.map(function(a) { return a.name; });
-            transformedTracklist[i] = {
-                'artists' : artists,
-                'name' : trackList[i].name,
-                'delta' : delta[i],
-                'image' : trackList[i].album.images[2].url,
-                'albumName' : trackList[i].album.name
-            }
-        }
-        return transformedTracklist;
-    };
-
     app.getTracksFromList = function (list) {
         list = list.trim().split(/\s+/);
         return list.map(function(url) { return url.substr(31,22); });
     };
 
+    /**
+     * Validates the track list ids
+     * @param list
+     * @returns {*}
+     */
     app.validateTracksFromList = function (list) {
         list = app.getTracksFromList(list);
         let response = {
@@ -98,9 +80,7 @@
             list : list,
             error : ''
         };
-        let trackIdRegex = new RegExp("^[a-zA-Z0-9]{22}$");
-
-        console.log(list);
+        let trackIdRegex = new RegExp("^[a-zA-Z0-9]{22}$"); // 22 alpha numeric characters
 
         if (list.length == 1) {
             return {
@@ -125,15 +105,25 @@
         return response;
     };
 
+    /**
+     * Updates the error text box with the error
+     * @param errorText
+     */
     app.displayError = function (errorText) {
         document.getElementById('error-message').className = '';
         document.getElementById('validation-warning').innerText = ' ' + errorText;
     };
 
+    /**
+     * Receives lists from the form or demo data, then does the comparison of ids to work out the main track diffs
+     * Passes off the results to another method getTrackDataAndUpdate which does the lifting
+     * @param listOlder
+     * @param listNewer
+     */
     app.comparePlaylists = function (listOlder, listNewer) {
 
         if (alreadyDone) {
-            // Already done, do a warning.
+            // Already done, don't do shit
             console.log("You've already done this, reset the page");
             return;
         }
@@ -178,90 +168,13 @@
             }
             results.newer[i] = match ? j + 1 : 'New';
         }
+        // Bit spaghetti
         app.getTrackDataAndUpdate(createGroupedArray(listNewer, 36), results.newer, 'tableNewer');
         app.getTrackDataAndUpdate(createGroupedArray(listOlder, 36), results.older, 'tableOlder');
     };
 
-    app.getArtistOccurrancesFromTransformedTracks = function (transformedTrackList) {
-        let artistOccurances = {};
-        let tracklistLen = transformedTrackList.length;
-        for (var i = 0; i < tracklistLen; i++) {
-            var artists = transformedTrackList[i].artists;
-            for (var j = 0; j < artists.length; j++) {
-                let power = (tracklistLen - i)/tracklistLen;
-                let modifier = Math.exp(power); // Exponential ranking
-                //let modifier = power; // Linear ranking
-                if (typeof artistOccurances[artists[j]] !== 'undefined') {
-                    if (artistOccurances[artists[j]]['count'] > 0) {
-                        artistOccurances[artists[j]]['weighted'] += modifier;
-                        artistOccurances[artists[j]]['count']++;
-                        artistOccurances[artists[j]]['songs'].push(transformedTrackList[i].name);
-                    }
-                }
-                else {
-                    artistOccurances[artists[j]] = {
-                        weighted : modifier,
-                        count : 1,
-                        songs : [transformedTrackList[i].name],
-                        albumArt : transformedTrackList[i].image
-                    };
-                }
-                break; // Decided not to factor in supporting artists
-            }
-        }
-        return artistOccurances;
-    };
-
-    app.getAlbumOccurrancesFromTransformedTracks = function (transformedTrackList) {
-        let albumOccurances = {};
-        let tracklistLen = transformedTrackList.length;
-        for (let i = 0; i < tracklistLen; i++) {
-            let albumName = transformedTrackList[i].albumName;
-            let power = (tracklistLen - i)/tracklistLen;
-            let modifier = Math.exp(power); // Exponential ranking
-            //let modifier = power; // Linear ranking
-            if (typeof albumOccurances[albumName] !== 'undefined') {
-                if (albumOccurances[albumName]['count'] > 0) {
-                    albumOccurances[albumName]['weighted'] += modifier;
-                    albumOccurances[albumName]['count']++;
-                    albumOccurances[albumName]['songs'].push(transformedTrackList[i].name);
-                }
-            }
-            else {
-                albumOccurances[albumName] = {
-                    weighted : modifier,
-                    count : 1,
-                    artist : transformedTrackList[i].artists[0],
-                    album : transformedTrackList[i].albumName,
-                    albumArt : transformedTrackList[i].image,
-                    songs : [transformedTrackList[i].name]
-                };
-            }
-        }
-        return albumOccurances;
-    };
-
-    /** real bait method */
-    app.getTopArtistsOrAlbums = function (occurances, count, albums=false) {
-        var sortedOccurances = Object.keys(occurances).sort(function(a,b){return occurances[b].weighted-occurances[a].weighted});
-        var topTracks = [];
-        for (var i = 0; i < count; i++) {
-            topTracks[i] = {
-                'name' : sortedOccurances[i],
-                'songs' : occurances[sortedOccurances[i]].songs,
-                'albumArt' : occurances[sortedOccurances[i]].albumArt,
-                'count' : occurances[sortedOccurances[i]].count,
-                'weighted' : occurances[sortedOccurances[i]].weighted
-            };
-            if (albums) {
-                topTracks[i]['artist'] = occurances[sortedOccurances[i]].artist;
-            }
-        }
-        return topTracks;
-    };
-
     /**
-     * Once we've got
+     * Once we've got our chunked array this calls the spotify api to get the data, then updates the tables accordingly
      * @param chunkedArray
      * @param diff
      * @param tableId
@@ -305,10 +218,137 @@
             });
     };
 
+    /**
+     * Transforms the spotify api response into a simpler object for processing
+     * @param trackList
+     * @param delta
+     * @returns {Array}
+     */
+    app.transformTracklist = function (trackList, delta) {
+        let transformedTracklist = [], artists = [];
+        for (let i = 0; i < trackList.length; i++) { //Newer List
+            artists = trackList[i].artists.map(function(a) { return a.name; });
+            transformedTracklist[i] = {
+                'artists' : artists,
+                'name' : trackList[i].name,
+                'delta' : delta[i],
+                'image' : trackList[i].album.images[2].url,
+                'albumName' : trackList[i].album.name
+            }
+        }
+        return transformedTracklist;
+    };
+
+    /**
+     * Applies an exponentially decaying ranking for each track in the top 100 to get an accurate ranking of artist
+     * popularity in the list.
+     * @param transformedTrackList
+     * @returns {{}}
+     */
+    app.getArtistOccurrancesFromTransformedTracks = function (transformedTrackList) {
+        let artistOccurances = {};
+        let tracklistLen = transformedTrackList.length;
+        for (var i = 0; i < tracklistLen; i++) {
+            var artists = transformedTrackList[i].artists;
+            for (var j = 0; j < artists.length; j++) {
+                let power = (tracklistLen - i)/tracklistLen;
+                let modifier = Math.exp(power); // Exponential ranking
+                //let modifier = power; // Linear ranking
+                if (typeof artistOccurances[artists[j]] !== 'undefined') {
+                    if (artistOccurances[artists[j]]['count'] > 0) {
+                        artistOccurances[artists[j]]['weighted'] += modifier;
+                        artistOccurances[artists[j]]['count']++;
+                        artistOccurances[artists[j]]['songs'].push(transformedTrackList[i].name);
+                    }
+                }
+                else {
+                    artistOccurances[artists[j]] = {
+                        weighted : modifier,
+                        count : 1,
+                        songs : [transformedTrackList[i].name],
+                        albumArt : transformedTrackList[i].image
+                    };
+                }
+                break; // Decided not to factor in supporting artists
+            }
+        }
+        return artistOccurances;
+    };
+
+    /**
+     * See above but for albums
+     * @param transformedTrackList
+     * @returns {{}}
+     */
+    app.getAlbumOccurrancesFromTransformedTracks = function (transformedTrackList) {
+        let albumOccurances = {};
+        let tracklistLen = transformedTrackList.length;
+        for (let i = 0; i < tracklistLen; i++) {
+            let albumName = transformedTrackList[i].albumName;
+            let power = (tracklistLen - i)/tracklistLen;
+            let modifier = Math.exp(power); // Exponential ranking
+            //let modifier = power; // Linear ranking
+            if (typeof albumOccurances[albumName] !== 'undefined') {
+                if (albumOccurances[albumName]['count'] > 0) {
+                    albumOccurances[albumName]['weighted'] += modifier;
+                    albumOccurances[albumName]['count']++;
+                    albumOccurances[albumName]['songs'].push(transformedTrackList[i].name);
+                }
+            }
+            else {
+                albumOccurances[albumName] = {
+                    weighted : modifier,
+                    count : 1,
+                    artist : transformedTrackList[i].artists[0],
+                    album : transformedTrackList[i].albumName,
+                    albumArt : transformedTrackList[i].image,
+                    songs : [transformedTrackList[i].name]
+                };
+            }
+        }
+        return albumOccurances;
+    };
+
+    /**
+     * Originally built to get the top artists, then hacked for laziness to support albums.
+     * Real bait
+     * @param occurances
+     * @param count
+     * @param albums
+     * @returns {Array}
+     */
+    app.getTopArtistsOrAlbums = function (occurances, count, albums=false) {
+        var sortedOccurances = Object.keys(occurances).sort(function(a,b){return occurances[b].weighted-occurances[a].weighted});
+        var topTracks = [];
+        for (var i = 0; i < count; i++) {
+            topTracks[i] = {
+                'name' : sortedOccurances[i],
+                'songs' : occurances[sortedOccurances[i]].songs,
+                'albumArt' : occurances[sortedOccurances[i]].albumArt,
+                'count' : occurances[sortedOccurances[i]].count,
+                'weighted' : occurances[sortedOccurances[i]].weighted
+            };
+            if (albums) {
+                topTracks[i]['artist'] = occurances[sortedOccurances[i]].artist;
+            }
+        }
+        return topTracks;
+    };
+
+    /**
+     * Calculates the number of unique artists
+     * @param artistOccurrances
+     * @param tableId
+     */
     app.doUnqiueArtists = function (artistOccurrances, tableId) {
         document.getElementById(tableId + '-artist-diversity').innerText = Object.keys(artistOccurrances).length;
     };
 
+    /**
+     * Updates the top 100 track table
+     * @param transformedTrackList
+     * @param tableId
+     */
     app.updateTable = function (transformedTrackList, tableId) {
 
         let table = document.getElementById(tableId);
@@ -358,6 +398,10 @@
         }
     };
 
+    /**
+     * @param topArtists
+     * @param tableId
+     */
     app.updateTopArtistsTable = function(topArtists, tableId) {
         let table = document.getElementById(tableId + '-topArtists');
         let position = 0;
@@ -377,6 +421,11 @@
             row.insertCell(3).outerHTML ='<td class="track-position">'+ topArtists[i].count +'</td>';
         }
     };
+
+    /**
+     * @param topAlbums
+     * @param tableId
+     */
     app.updateTopAlbumsTable = function(topAlbums, tableId) {
         let table = document.getElementById(tableId + '-topAlbums');
         let position = 0;
@@ -386,32 +435,36 @@
             row.insertCell(0).innerText = position.toString();
             row.insertCell(1).outerHTML = '<td class="track-art"><img src="' + topAlbums[i].albumArt + '"></td>';
             let artistAndTrackDataHTML = '<div class="top-album-name">' + topAlbums[i].name + '</div>' +
-                '<div class="top-album-artist-name">' + topAlbums[i].artist + '</div>'
-                /*+ '<div class="top-artist-tracks">' +
-                '<ul class="top-artist-tracklist">';
-            for (let j = 0; j < topAlbums[i].songs.length; j++) {
-                artistAndTrackDataHTML += '<li>' + topAlbums[i].songs[j] + '</li>';
-            }
-            artistAndTrackDataHTML += '</ul></div>';*/
+                '<div class="top-album-artist-name">' + topAlbums[i].artist + '</div>';
             row.insertCell(2).innerHTML = artistAndTrackDataHTML;
             row.insertCell(3).outerHTML ='<td class="track-position">'+ topAlbums[i].count +'</td>';
         }
     };
 
+    /**
+     * Given a nice transformed tracklist, this updates all the markup with the data
+     * @param transformedTrackList
+     * @param tableId
+     */
     app.updatePageWithSpotifyData = function (transformedTrackList, tableId) {
         app.updateTable(transformedTrackList, tableId);
+
         let artistOccurrances = app.getArtistOccurrancesFromTransformedTracks(transformedTrackList);
         let topArtists = app.getTopArtistsOrAlbums(artistOccurrances, 10);
         app.updateTopArtistsTable(topArtists, tableId);
+
         let albumOccurrances = app.getAlbumOccurrancesFromTransformedTracks(transformedTrackList);
         let topAlbums = app.getTopArtistsOrAlbums(albumOccurrances, 10, true);
         app.updateTopAlbumsTable(topAlbums, tableId);
 
         app.doUnqiueArtists(artistOccurrances, tableId);
-        document.getElementById('results').className = '';
+        document.getElementById('results').className = ''; // Reveal the section
     };
 
-    // Example track response
+    /**
+     * Example track response
+     * @type {{album: {album_type: string, artists: [*], available_markets: [*], external_urls: {spotify: string}, href: string, id: string, images: [*], name: string, type: string, uri: string}, artists: [*], available_markets: [*], disc_number: number, duration_ms: number, explicit: boolean, external_ids: {isrc: string}, external_urls: {spotify: string}, href: string, id: string, name: string, popularity: number, preview_url: string, track_number: number, type: string, uri: string}}
+     */
     var track = {
         album : {
             album_type : "album",
