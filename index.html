@@ -15,6 +15,7 @@
 <style>
     body {
         background-color: rgb(40,40,40);
+        /*background-color: rgb(24,24,24);*/
         /*font-family: 'Montserrat', sans-serif;*/
 
     }
@@ -67,7 +68,8 @@
     }
 
     section.intro {
-        background-color: rgb(18,18,18);
+        /*background-color: rgb(40,40,40);*/
+        background-color: rgb(24,24,24);
     }
 
     .screenshot {
@@ -77,7 +79,7 @@
 
     footer {
         color: #fff;
-        background-color: rgb(24,24,24);
+        background-color: rgb(24, 24, 24);
 
     }
 
@@ -196,8 +198,11 @@
     }
 
     .footer {
-        text-align: center;
         padding: 3em 0 3em 0;
+    }
+
+    .bottom-banner {
+        background-color: rgb(18,18,18);
     }
 
 
@@ -224,14 +229,14 @@
 </div>
 <section class="intro">
     <div class="container">
-        <p class="lead">Compare your most recent yearly Top 100 playlists to discover how your music taste has evolved. You'll unlock your
-        most played tracks, artists and albums for each year.</p>
+        <p class="lead">Compare your most recent yearly top 100 playlists to discover how your music taste has evolved over time.
+            Using this tool, you'll gain an insight into your most played tracks, artists, and albums for each year.</p>
         <p>You'll need:</p>
             <ul>
-                <li>To have retained your 2 most recent Spotify Top 100 playlists</li>
+                <li>To have retained two most recent Spotify Top 100 playlists</li>
                 <li>Be on the desktop version</li>
             </ul>
-        <p>If you don't have 2 playlists, it's cool, hit the demo me button below to see how this thing should work.</p>
+        <p>If you don't have 2 consecutive top 100 Spotify playlists, it's cool, hit the 'demo me' button below to see how this thing should work.</p>
         <div class="centre-button">
             <button type="submit" id="btn-demo" class="btn btn-primary">Demo Me</button>
         </div>
@@ -312,7 +317,9 @@ https://open.spotify.com/track/4My8vV76KJYVC3apdvFazJ"></textarea>
 
             <h2>Step 4:</h2>
             <p>Compare that shit.</p>
-            <button type="submit" id="mainSubmit" class="btn btn-primary">Compare</button>
+            <div class="centre-button">
+                <button type="submit" id="mainSubmit" class="btn btn-primary">Compare</button>
+            </div>
         </form>
     </div>
 </section>
@@ -333,13 +340,13 @@ https://open.spotify.com/track/4My8vV76KJYVC3apdvFazJ"></textarea>
                 </div>
             </div>
             <div class="row">
-                <div class="col-xs-6">
+                <div class="col-md-6">
                     <table id="tableOlder" class="table table-hover table-inverse">
 
                     </table>
                 </div>
 
-                <div class="col-xs-6">
+                <div class="col-md-6">
                     <table id="tableNewer" class="table table-hover table-inverse">
 
                     </table>
@@ -416,11 +423,11 @@ https://open.spotify.com/track/4My8vV76KJYVC3apdvFazJ"></textarea>
             </div>
             <div class="row">
 
-                <div class="col-md-6 centre-text">
+                <div class="col-sm-6 centre-text">
                     <span id="tableOlder-artist-diversity" class="artist-diversity-number"></span>
                     <span class="unique-artists">Unique Artists</span>
                 </div>
-                <div class="col-md-6 centre-text">
+                <div class="col-sm-6 centre-text">
                     <span id="tableNewer-artist-diversity" class="artist-diversity-number"></span>
                     <span class="unique-artists">Unique Artists</span>
 
@@ -435,10 +442,26 @@ https://open.spotify.com/track/4My8vV76KJYVC3apdvFazJ"></textarea>
 
 
 
-<footer class="footer">
+<footer class="footer about">
     <div class="container">
         <p class="lead">
-            Thanks for using.
+            About/Credits
+        </p>
+        <ul>
+            <li>Bootstrap 4</li>
+            <li>Vanilla JS (asynchronous, promises)</li>
+            <li>Github pages</li>
+            <li>Spotify API</li>
+            <li>Spotify web api wrapper</li>
+            <li>Unsplash</li>
+        </ul>
+    </div>
+</footer>
+
+<footer class="bottom-banner">
+    <div class="container">
+        <p class="lead">
+            finchhemsier
         </p>
     </div>
 </footer>
