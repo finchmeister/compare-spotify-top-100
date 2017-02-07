@@ -4,10 +4,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Main Form</title>
+    <meta name="theme-color" content="#121212" />
+
+    <title>Compare Spotify Top 100</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
-    <!--<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 </head>
@@ -15,9 +16,6 @@
 <style>
     body {
         background-color: rgb(40,40,40);
-        /*background-color: rgb(24,24,24);*/
-        /*font-family: 'Montserrat', sans-serif;*/
-
     }
 
     .navbar-dark {
@@ -56,6 +54,20 @@
         .jumbotron {
             padding: 10rem 2rem;
         }
+    }
+
+
+
+    .credit-link, .credit-link:hover, .credit-link:visited .credit-link:active {
+        color: white;
+    }
+
+    .about-text{
+        color: #848484;
+    }
+    .source-link {
+        text-align: center;
+        font-style: italic;
     }
 
     .centre-button {
@@ -202,11 +214,13 @@
     }
 
     .footer {
-        padding: 3em 0 3em 0;
+        padding: 3em 0 0 0;
     }
 
     .bottom-banner {
         background-color: rgb(18,18,18);
+        padding: 1.15em 0 1.15em;
+        text-align: end;
     }
 
 
@@ -217,7 +231,7 @@
 
 <nav class="navbar navbar-dark bg-inverse">
     <div class="container">
-        <a class="navbar-brand" href="https://finchmeister.co.uk">>_ thefinchmeister</a>
+        <a class="navbar-brand" href="https://finchmeister.co.uk" target="_blank">>_ thefinchmeister</a>
         <ul class="nav navbar-nav">
             <!--TODO?-->
         </ul>
@@ -233,7 +247,7 @@
 </div>
 <section class="intro">
     <div class="container">
-        <p class="lead">Compare your most recent yearly top 100 playlists to discover how your music taste has evolved over time.
+        <p class="lead">Spotify give you your top 100 playlists each year, compare them to discover how your music taste has evolved over time.
             Using this tool, you'll gain an insight into your most played tracks, artists, and albums for each year.</p>
         <p>You'll need:</p>
             <ul>
@@ -454,25 +468,25 @@ https://open.spotify.com/track/4My8vV76KJYVC3apdvFazJ"></textarea>
         <p class="lead">
             About/Credits
         </p>
-        <ul>
-            <li>Bootstrap 4</li>
-            <li>Vanilla JS (asynchronous, promises)</li>
-            <li>Github pages</li>
-            <li>Spotify API</li>
-            <li>Spotify web api wrapper</li>
-            <li>Unsplash</li>
-        </ul>
+        <p class="about-text">
+            I didn't build this to change the world, I built this because I didn't get the 'your year in music' email from
+            Spotify. I wanted to know what my year in music was and how it had changed from last year's. If they weren't going
+            to tell me, I was going to find out myself - now you can, too. Here's what I used:</p>
+        <p class="about-text">
+            <a class="credit-link" href="http://v4-alpha.getbootstrap.com/" target="_blank"> Bootstrap v4</a> &bull; front-end framework for handling the colouring in<br>
+            <a class="credit-link" href="https://github.com/jmperez/spotify-web-api-js" target="_blank">spotify-web-api-js</a> &bull; client-side JS wrapper for the Spotify API<br>
+            <a class="credit-link" href="https://unsplash.com/search/music" target="_blank">Unsplash</a> &bull; an awesome place for free images<br>
+            <a class="credit-link" href="https://pages.github.com/" target="_blank">Github Pages</a> &bull; for hosting<br>
+        </p>
+        <p class="source-link"><a class="credit-link" href="https://github.com/finchmeister/compare-spotify-top-100" target="_blank"><i class="fa fa-github fa-3x" aria-hidden="true"></i></a> </p>
     </div>
 </footer>
 
 <footer class="bottom-banner">
     <div class="container">
-        <p class="lead">
-            >_ finchmeister
-        </p>
+        <a class="credit-link" href="https://finchmeister.co.uk">finchmeister.co.uk</a>
     </div>
 </footer>
-
 
 <script
         src="https://code.jquery.com/jquery-3.1.1.min.js"
