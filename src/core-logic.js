@@ -208,7 +208,7 @@
             })
             .then(function(){
                 // Scroll it, forced to use jquery here
-                let hash = '#results-scroll-point';
+                let hash = '#results-sp';
                 $('html, body').animate({
                     scrollTop: $(hash).offset().top
                 }, 800, function(){
