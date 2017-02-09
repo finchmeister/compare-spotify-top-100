@@ -7,6 +7,7 @@
     var app = {};
     var spotifyApi = new SpotifyWebApi();
     var alreadyDone = 0;
+    var nowPlaying;
 
     var listOlder, listNewer;
 
@@ -203,6 +204,7 @@
             // With the transformed track data, do all the html shit
             .then(function(transformedTrackList){
                 app.updatePageWithSpotifyData(transformedTrackList, tableId);
+                app.setUpOnTrackPlayEvent();
             })
             .then(function(){
                 // Scroll it, forced to use jquery here
@@ -233,8 +235,9 @@
                 'name' : trackList[i].name,
                 'delta' : delta[i],
                 'image' : trackList[i].album.images[2].url,
-                'albumName' : trackList[i].album.name
-            }
+                'albumName' : trackList[i].album.name,
+                'previewURL' : trackList[i].preview_url
+            };
         }
         return transformedTracklist;
     };
@@ -360,6 +363,7 @@
                 // Add row to table
                 position = i + 1;
                 let row = table.insertRow();
+                row.classList.add("top100-row");
                 row.insertCell(0).outerHTML = '<td class="track-position">' + position.toString() + '</td>';
                 row.insertCell(1).outerHTML = '<td class="track-art"><img src="' + transformedTrackList[i].image + '"></td>';
                 row.insertCell(2).innerHTML = '<div class="track-name">' + transformedTrackList[i].name + '</div>' + '<div class="track-artist">' + transformedTrackList[i].artists.join(', ') + '</div>';
@@ -389,6 +393,11 @@
                             cellHTML = '<span class="relative-year">NY</span> 100+ <i class="fa fa-arrow-down" aria-hidden="true"></i>';
                         }
                     }
+                    // Also sneak in the audio tag, set it as a data attribute, we don't want it to load unless clicked
+                    let previewURL = transformedTrackList[i].previewURL;
+
+
+                    cellHTML += ' <audio class="top100-mp3" data-url="' + previewURL + '" ><source type="audio/mp3"></audio>';
                     return cellHTML;
                 } (position, transformedTrackList[i].delta, newer));
             }
@@ -459,6 +468,59 @@
 
         app.doUnqiueArtists(artistOccurrances, tableId);
         document.getElementById('results').className = ''; // Reveal the section
+    };
+
+    /**
+     * Adds a load of listeners to the table rows
+     */
+    app.setUpOnTrackPlayEvent = function () {
+        let anchors = document.getElementsByClassName('top100-row');
+        for(let i = 0; i < anchors.length; i++) {
+            let anchor = anchors[i];
+            anchor.onclick = function(anchor) {
+                let row = anchor.target;
+                // If the first parent is the top-100 row, great
+                if (anchor.target.parentNode.className == 'top100-row') {
+                    row = anchor.target.parentNode;
+                } else {
+                    // Otherwise it might be the next
+                    if (anchor.target.parentNode.parentNode.className == 'top100-row') {
+                        row = anchor.target.parentNode.parentNode;
+                    }
+                }
+                app.playTune(row.getElementsByClassName('top100-mp3')[0]);
+            }
+        }
+    };
+
+    /**
+     * Toggles between playing the tune
+     * @param anchor
+     */
+    app.playTune = function (audio) {
+        app.muteAllOthers();
+        // Lazy load it
+        audio.setAttribute("src", audio.getAttribute("data-url"));
+        if (nowPlaying == audio.getAttribute("data-url")) {
+            nowPlaying = null;
+            audio.pause();
+        } else {
+            nowPlaying = audio.getAttribute("data-url");
+            audio.play();
+        }
+    };
+
+    /**
+     * Mute other songs
+     */
+    app.muteAllOthers = function () {
+        let anchors = document.getElementsByClassName('top100-mp3');
+        for(let i = 0; i < anchors.length; i++) {
+            let mp3 = anchors[i];
+            if (!mp3.paused) {
+                mp3.pause();
+            }
+        }
     };
 
     /**

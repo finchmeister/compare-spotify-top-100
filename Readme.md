@@ -22,9 +22,9 @@ I didn't build this to change the world, I built this because I didn't get the '
 - ~~Decide on hosting~~
     - ~~GH~~
     - ~~finchmeister.co.uk~~
+- ~~Preview track~~
 
 
 ## Nice To Have (Probably won't ever happen):
-- Preview track
 - Sort fonts
 - Investigate genres
