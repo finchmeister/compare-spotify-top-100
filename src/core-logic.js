@@ -7,7 +7,8 @@
     var app = {};
     var spotifyApi = new SpotifyWebApi();
     var alreadyDone = 0;
-    var nowPlaying;
+    var nowPlaying; // Stores the url of the now playing track
+    var demo; // true if in demo mode
 
     var listOlder, listNewer;
 
@@ -21,6 +22,8 @@
         event.preventDefault();
         listOlder = top2015; // Obtained from demo-data'js
         listNewer = top2016;
+        demo = true;
+        ga('send', 'event', 'Demo', 'Submit');
         app.comparePlaylists(listOlder, listNewer);
     });
 
@@ -28,6 +31,8 @@
         event.preventDefault();
         listOlder = document.getElementById('list2').value; // Obtained from the form
         listNewer = document.getElementById('list1').value;
+        demo = false;
+        ga('send', 'event', 'UserData', 'Submit');
         app.comparePlaylists(listOlder, listNewer);
        });
 
@@ -139,6 +144,10 @@
         else if (!listNewerResponse.success) {
             app.displayError(listNewerResponse.error);
             return;
+        }
+
+        if (!demo) { // Not in demo, send an event
+            ga('send', 'event', 'UserData', 'Passed Validation');
         }
 
         listOlder = listOlderResponse.list;
